@@ -1,0 +1,11 @@
+h1#title {
+  color: #89a02c;
+  padding-top: 15px;
+  font-size: 35px;
+  font-family: "PoetsenOne";
+  text-align: center;
+}
+div#code {
+  height: 100%;
+  width: 100%;
+}

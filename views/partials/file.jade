@@ -1,0 +1,7 @@
+nav#info.is-open
+	h1#file-name {{file.name}}
+	div.button-panel
+		button(ng-click="edit()") Edit
+		button(ng-click="delete()") Delete
+
+div#file-content(ng-bind-html="getContent(file.content)")

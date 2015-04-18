@@ -1,0 +1,61 @@
+nav#info
+	transition margin-right 0.3s
+	position relative
+	right 0
+	top 0
+	float right
+	background-color #89a02cff
+	height 100%
+	width 100px
+	border-left 2px solid rgba(#000,0.1)
+	&.is-open
+		margin-right 0px
+	&.is-closed
+		margin-right -102px
+	h1#file-name
+		background-color #57661cff
+		width 100%
+		font-family 'PoetsenOne'
+		color white
+		text-transform capitalize
+		text-align center
+		padding-bottom 5px
+		padding-top 5px
+	div.button-panel
+		margin-top 10px
+
+
+
+div#file-content
+	height 95%
+	overflow-y scroll 
+	text-align center
+	line-height 3em
+	h1
+		text-align center
+		margin-top 10px
+		font-size 50px
+		font-family 'PoetsenOne'
+		text-transform capitalize
+		color #89a02cff
+	h2
+		padding 10px
+		font-size 30px
+		font-family 'PoetsenOne'
+		text-transform capitalize
+		color #89a02cff
+	h3
+		padding 10px
+		text-align center
+		font-size 15px
+		color #555
+		text-decoration underline		
+	p
+		font-size 15px
+		color #555
+	ul
+		text-align center
+		list-style-type disc
+		li
+			font-size 15px
+			color #888

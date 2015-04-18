@@ -1,0 +1,67 @@
+.header
+	white-space nowrap
+	background-color #6c6753ff
+	position fixed
+	top 0
+	right 0
+	left 0
+	z-index 3
+	height 50px
+	width 100%
+	.menu-icon
+		position relative
+		display inline-block
+		top 5px
+		left 5px
+		border-radius 50%
+		background-color #000
+		width 35px
+		height 35px
+		&.is-open
+			transition background 0.5s, transform 0.5s
+			transform rotate(180deg)
+			span::before, span::after
+				transform-origin 50% 50%
+			span
+				background-color transparent
+			span::before
+				transform translateY(0) rotate(45deg)	
+			span::after
+				transform translateY(0) rotate(-45deg)	
+			
+		span
+			display block
+			position absolute
+			top	50%
+			left 50%
+			transform translateX(-50%) translateY(-50%)
+			width 13px
+			height 2px
+			background-color #fff
+			&::before, &::after
+				content ''
+				position absolute
+				top 0 
+				left 0
+				display block
+				width 13px
+				height 2px
+				background-color #eee
+				transform translateY(-6px)
+				transition transform 0.5s
+			&::after
+				transform translateY(6px)
+		&.is-closed:hover
+			span::before
+				transform translateY(6px)
+			span::after
+				transform translateY(-6px)
+				
+				
+	> h1
+		display inline-block
+		color white
+		font-family 'PoetsenOne'
+		margin-left 10px 
+		margin-bottom 15px
+		font-size 30px

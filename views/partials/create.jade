@@ -1,0 +1,23 @@
+h1 Create a new Element
+
+form(id="create-form", ng-submit="create()")
+	br
+	h2 Type : 
+	input(type="radio", ng-model="file.type", value="text")
+	label   Text
+	br
+	input(type="radio", ng-model="file.type", value="folder")
+	label   Folder
+	br
+	label Name :  
+	input(type="text", ng-model="file.name")
+	br
+	p Parent : {{parentName}} 
+	br
+	input(type="submit", value="Submit")
+
+
+
+datalist(id="type")
+	option(value="text")
+	option(value="folder")
