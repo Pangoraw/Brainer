@@ -2,7 +2,7 @@ MongoClient = require('mongodb').MongoClient
 ObjectID 	= require('mongodb').ObjectID
 assert 		= require 'assert'
 
-config 		= require './config'
+config 		= require '../config'
 
 url = "mongodb://#{config.DATABASEIP}:#{config.DATABASEPORT}/brainer"
 

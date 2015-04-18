@@ -1,7 +1,7 @@
 express = require "express"
-routes = require "./routes"
+routes = require "./modules/routes"
 path = require 'path'
-config = require './config'
+config = require './modules/config'
 app = express()
 
 app.set "views", __dirname + "/views"
@@ -22,4 +22,4 @@ serverStarted = ->
 server = app.listen app.get('port'), app.get('ipaddr'), serverStarted 
 
 io = require('socket.io').listen server
-require('./socket').configure io 
+require('./modules/socket').configure io 
