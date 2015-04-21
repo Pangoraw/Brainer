@@ -69,7 +69,9 @@ CreateCtrl = ($scope, Socket, Files, $location) ->
   if Files.getCurrentFolderId() != "root" 
     Socket.emit 'getFolder', Files.getCurrentFolderId()
     $scope.file.parent = Files.getCurrentFolderId()
-  else $scope.file.parent = 'root'
+  else 
+    $scope.file.parent = 'root'
+    $scope.parentName = 'root'
 
   Socket.on 'folder', (folder) ->
     if folder?

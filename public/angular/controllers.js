@@ -83,6 +83,7 @@ CreateCtrl = function($scope, Socket, Files, $location) {
     $scope.file.parent = Files.getCurrentFolderId();
   } else {
     $scope.file.parent = 'root';
+    $scope.parentName = 'root';
   }
   Socket.on('folder', function(folder) {
     if (folder != null) {
