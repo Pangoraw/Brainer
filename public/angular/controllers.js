@@ -60,8 +60,11 @@ FilesCtrl = function($scope, Socket, Files, $location) {
     return $location.path('/create');
   };
   return $scope.updateCurrentFolder = function() {
-    Files.updateCurrentFolder;
-    console.log(Files.getCurrentFolder());
+    if (Files.getCurrentFolderId() === "root") {
+      alert('You can not update the root folder.');
+      return;
+    }
+    Files.updateCurrentFolder();
     return $location.path("/updateFolder/" + (Files.getCurrentFolderId()));
   };
 };

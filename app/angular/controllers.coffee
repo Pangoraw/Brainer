@@ -52,8 +52,8 @@ FilesCtrl = ($scope, Socket, Files, $location) ->
 
 
   $scope.updateCurrentFolder = ->
-    Files.updateCurrentFolder 
-    console.log Files.getCurrentFolder()
+    if Files.getCurrentFolderId() == "root" then alert 'You can not update the root folder.'; return 
+    Files.updateCurrentFolder() 
     $location.path "/updateFolder/#{Files.getCurrentFolderId()}"
 
 FilesCtrl.$inject = ["$scope", "Socket", "Files", "$location"]
