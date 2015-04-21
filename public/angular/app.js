@@ -5,10 +5,6 @@
  */
 angular.module("myApp", ["ngRoute", "ngSanitize", "myApp.filters", "myApp.services", "myApp.directives"]).config([
   "$routeProvider", function($routeProvider) {
-    $routeProvider.when("/test", {
-      templateUrl: "partials/test",
-      controller: AppCtrl
-    });
     $routeProvider.when("/home", {
       templateUrl: "partials/home",
       controller: AppCtrl

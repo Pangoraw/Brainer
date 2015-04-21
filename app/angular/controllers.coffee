@@ -9,7 +9,7 @@ AppCtrl = ($scope, $location) ->
   $scope.editFolder = ->
     $location.path "/editfolder"
 
-AppCtrl.$inject = ["$scope", "$location"]
+AppCtrl.$inject = [ "$scope", "$location" ]
 
 FilesCtrl = ($scope, Socket, Files, $location) ->
   $scope.files = []
