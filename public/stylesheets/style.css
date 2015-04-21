@@ -141,6 +141,15 @@ nav.files-list.is-closed {
 nav.files-list.is-open {
   margin-left: 0;
 }
+nav.files-list .control-panel button {
+  float: left;
+}
+nav.files-list .control-panel button.reload {
+  width: 31px;
+}
+nav.files-list .control-panel input.search {
+  width: 100%;
+}
 nav.files-list button {
   margin: 0;
 }

@@ -6,13 +6,14 @@ block content
       span
     h1 Brainer
   nav.files-list.is-closed(ng-controller="FilesCtrl")
-    button(ng-click="goBackInHistory()") <-
-    button(ng-click="goBackInTree()") ^
-    button(ng-click="goCreate()") + 
-    button(ng-click="goHome()") Home
-    button(ng-click="updateCurrentFolder()") Update Folder
-    button(ng-click="refresh()") R
-    input(type="text", placeholder="Search...", ng-model="q")
+    .control-panel
+      button(ng-click="goBackInHistory()") <-
+      button(ng-click="goBackInTree()") ^
+      button(ng-click="goCreate()") + 
+      button(ng-click="goHome()") Home
+      button(ng-click="updateCurrentFolder()") Update Folder
+      button.reload(ng-click="refresh()") R
+      input.search(type="text", placeholder="Search in folder...", ng-model="q")
     ul
       li(ng-repeat="file in files | filter : q ", class="animated slideInLeft")
         button.files(ng-click="request(file._id, file.type)")
