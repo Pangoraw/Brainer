@@ -1,20 +1,21 @@
+link(rel="stylesheet", type="text/css", href="stylesheets/create.css")
+
 h1 Create a new Element
 
 form(id="create-form", ng-submit="create()")
-	br
-	h2 Type : 
-	input(type="radio", ng-model="file.type", value="text")
-	label   Text
-	br
-	input(type="radio", ng-model="file.type", value="folder")
-	label   Folder
-	br
-	label Name :  
-	input(type="text", ng-model="file.name")
-	br
-	p Parent : {{parentName}} 
-	br
-	input(type="submit", value="Submit")
+	h2 Type :
+	.input
+		label(for="type-text") 
+			input(type="radio", ng-model="file.type", value="text", name="type-text")
+			|	Text
+		label(for="type-folder") 
+			input(type="radio", ng-model="file.type", value="folder", name="type-folder")
+			|	Folder
+		label(for="name")
+			|	Name :  
+			input(name="name", type="text", ng-model="file.name")
+		p Parent : {{parentName}} 
+		input(type="submit", value="Submit")
 
 
 
