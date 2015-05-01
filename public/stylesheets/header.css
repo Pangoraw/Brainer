@@ -10,11 +10,14 @@
   width: 100%;
 }
 .header .menu-icon {
+  margin-top: 2px;
   position: relative;
   display: inline-block;
   top: 5px;
   left: 5px;
   border-radius: 50%;
+  border-width: 1px;
+  border-color: #fff;
   background-color: #000;
   width: 35px;
   height: 35px;
