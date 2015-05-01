@@ -1,17 +1,17 @@
 "use strict"
 
 ###
-  Declare app level module which depends on filters, services, and directives
+	Declare app level module which depends on filters, services, and directives
 ###
 
 angular.module("myApp", ["ngRoute", "ngSanitize", "myApp.filters", "myApp.services", "myApp.directives"])
 .config [
 	"$routeProvider", 
 	($routeProvider) ->
-	    $routeProvider.when "/home", { templateUrl: "partials/home", controller: AppCtrl }
-	    $routeProvider.when "/create", { templateUrl: "partials/create", controller: CreateCtrl }
-	    $routeProvider.when "/file/:id", { templateUrl: "partials/file", controller: FileCtrl }
-	    $routeProvider.when "/file/edit/:id", { templateUrl: "partials/edit", controller: EditCtrl }
-	    $routeProvider.when "/updateFolder/:id", { templateUrl: "partials/updateFolder", controller: UpdateCtrl }
-	    $routeProvider.otherwise { redirectTo: "/home" }
+		$routeProvider.when "/home", { templateUrl: "partials/home", controller: AppCtrl }
+		$routeProvider.when "/create", { templateUrl: "partials/create", controller: CreateCtrl }
+		$routeProvider.when "/file/:id", { templateUrl: "partials/file", controller: FileCtrl }
+		$routeProvider.when "/file/edit/:id", { templateUrl: "partials/edit", controller: EditCtrl }
+		$routeProvider.when "/updateFolder/:id", { templateUrl: "partials/updateFolder", controller: UpdateCtrl }
+		$routeProvider.otherwise { redirectTo: "/home" }
 	]

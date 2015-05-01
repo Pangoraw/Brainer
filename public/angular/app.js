@@ -1,7 +1,7 @@
 "use strict";
 
 /*
-  Declare app level module which depends on filters, services, and directives
+	Declare app level module which depends on filters, services, and directives
  */
 angular.module("myApp", ["ngRoute", "ngSanitize", "myApp.filters", "myApp.services", "myApp.directives"]).config([
   "$routeProvider", function($routeProvider) {
