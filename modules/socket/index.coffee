@@ -23,22 +23,21 @@ exports.configure = (io) ->
 
 		socket.on 'newFile', (file) ->
 			if file.type == 'text' then file.content = "<h1>#{file.name}</h1>"
-			FilesDatabase.insertFile file
-			FilesDatabase.findFiles file.parent, (files) ->
-				socket.emit 'files', files
+			FilesDatabase.insertFile file, ->
+				FilesDatabase.findFiles file.parent, (files) ->
+					socket.emit 'files', files
 	
 		socket.on 'getFilesInParent', (id) ->
 			FilesDatabase.findFile id, (file) ->
 				if file?
 					FilesDatabase.findFiles file.parent, (files) ->
 						socket.emit 'files', files
-###
-		socket.on 'updateFile', (file) ->
-			MongoDB.updateFile file
 
 		socket.on 'deleteFile', (file) ->
-			MongoDB.deleteFile file._id, ->
-				MongoDB.getFiles file.parent, (files) ->
+			FilesDatabase.removeFile file._id, ->
+				FilesDatabase.findFiles file.parent, (files) ->
 					socket.emit 'files', files
-###
+
+		socket.on 'updateFile', (file, callback=->) ->
+			FilesDatabase.updateFile file
 
