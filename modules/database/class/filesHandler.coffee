@@ -12,12 +12,12 @@ module.exports = class FilesHandler extends Collection
 	findFile : (id, callback) ->
 		callback( @get( { q : { _id : id } } ) ) 
 
-	insertFile : (file, callback) -> @add file; callback()
-	insertFiles : (files) -> @add files
+	insertFile : (file, callback=->) -> @add file; callback()
+	insertFiles : (files, callback=->) -> @add files; callback()
 
-	removeFile : (id, callback) -> if @remove id then callback()
+	removeFile : (id, callback=->) -> if @remove id then callback()
 
-	updateFile : (file, callback) -> @update file; callback()
+	updateFile : (file, callback=->) -> @update file; callback()
 
 	# TODO : Allow updating in class Collection
 
