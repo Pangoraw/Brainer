@@ -30,7 +30,7 @@ module.exports = class Collection
 			if !obj._id? then obj._id = new ObjectId()
 			data.push obj
 
-		data = JSON.stringify data
+		data = JSON.stringify data, null, 2
 
 		fs.writeFileSync @url, data
 
