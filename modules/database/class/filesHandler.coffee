@@ -9,10 +9,8 @@ module.exports = class FilesHandler extends Collection
 		callback @get { q : { parent : parentId } }
 
 	findFile : (id, callback) ->
-		if id == "root" 
-			ID = id
-		else ID = new ObjectID(id)
-		callback( @get( { q : { _id : ID } } ) ) 
+		id = new ObjectID(id)
+		callback( @get( { q : { _id : id } } ) ) 
 
 	insertFile : (file) -> @add file
 	insertFiles : (files) -> @add files
