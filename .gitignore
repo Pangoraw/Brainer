@@ -7,6 +7,9 @@ pids
 *.pid
 *.seed
 
+# Old database module
+modules/database-old
+
 # Database file and folder
 data
 
