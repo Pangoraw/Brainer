@@ -1,31 +1,38 @@
-MongoDB = require '../database'
-ObjectID = require('mongodb').ObjectID
+db = require '../database'
 
 exports.configure = (io) ->
+
+	FilesDatabase = new db.FilesHandler "data"
 
 	io.on 'connection', (socket) ->
 
 		socket.on 'getFiles', (parentId) ->
 			if !parentId? then parentId = "root"
-			MongoDB.getFiles parentId, (files) ->
+			FilesDatabase.findFiles parentId, (files) ->
 				socket.emit 'files', files
 
 		socket.on 'getFile', (id) ->
 			if id?
-				MongoDB.getFile id, (file) ->
+				FilesDatabase.findFile id, (file) ->
 					socket.emit 'file', file
 
 		socket.on 'getFolder', (id) ->
 			if id?
-				MongoDB.getFile id, (folder) ->
+				FilesDatabase.findFile id, (folder) ->
 					socket.emit 'folder', folder
 
 		socket.on 'newFile', (file) ->
 			if file.type == 'text' then file.content = "<h1>#{file.name}</h1>"
-			MongoDB.insertFile file
-			MongoDB.getFiles file.parent, (files) ->
+			FilesDatabase.insertFile file
+			FilesDatabase.findFiles file.parent, (files) ->
 				socket.emit 'files', files
-
+	
+		socket.on 'getFilesInParent', (id) ->
+			FilesDatabase.findFile id, (file) ->
+				if file?
+					FilesDatabase.findFiles file.parent, (files) ->
+						socket.emit 'files', files
+###
 		socket.on 'updateFile', (file) ->
 			MongoDB.updateFile file
 
@@ -33,9 +40,5 @@ exports.configure = (io) ->
 			MongoDB.deleteFile file._id, ->
 				MongoDB.getFiles file.parent, (files) ->
 					socket.emit 'files', files
+###
 
-		socket.on 'getFilesInParent', (id) ->
-			MongoDB.getFile id, (file) ->
-				if file?
-					MongoDB.getFiles file.parent, (files) ->
-						socket.emit 'files', files
