@@ -5,12 +5,15 @@ FilesCtrl = ($scope, Socket, Files, $location) ->
 
 	Files.setCurrentFolderId Files.history[Files.history.length-1]
 	
-	Socket.emit 'getFiles', Files.getCurrentFolderId() 
+	Socket.emit 'getFiles', Files.getCurrentFolderId()
+
 	Socket.on 'files', (files) ->
 		if files?
+			if ! Array.isArray files then files = [ files ]
 			$scope.files = files
 			if files.length > 0
 				Files.setCurrentFolderId files[0].parent
+
 	$scope.refresh = ->
 		$scope.request Files.getCurrentFolderId(), 'folder'
 

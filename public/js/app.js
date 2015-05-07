@@ -216,6 +216,9 @@ FilesCtrl = function($scope, Socket, Files, $location) {
   Socket.emit('getFiles', Files.getCurrentFolderId());
   Socket.on('files', function(files) {
     if (files != null) {
+      if (!Array.isArray(files)) {
+        files = [files];
+      }
       $scope.files = files;
       if (files.length > 0) {
         return Files.setCurrentFolderId(files[0].parent);
