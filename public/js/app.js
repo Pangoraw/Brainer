@@ -81,36 +81,174 @@ app.config([
 
 
 
-},{"./controllers/AppCtrl":3,"./controllers/CreateCtrl":4,"./controllers/EditCtrl":5,"./controllers/FileCtrl":6,"./controllers/FilesCtrl":7,"./controllers/UpdateCtrl":8,"./services/Files":9,"./services/Socket":10}],2:[function(require,module,exports){
+},{"./controllers/AppCtrl":5,"./controllers/CreateCtrl":6,"./controllers/EditCtrl":7,"./controllers/FileCtrl":8,"./controllers/FilesCtrl":9,"./controllers/UpdateCtrl":10,"./services/Files":11,"./services/Socket":12}],2:[function(require,module,exports){
+var FileList;
+
+module.exports = FileList = (function() {
+  FileList.prototype.goTo = null;
+
+  FileList.prototype.name = null;
+
+  FileList.prototype.id = null;
+
+  FileList.prototype.type = null;
+
+  function FileList(name, id, type, goTo, parentId) {
+    this.name = name;
+    this.id = id;
+    this.type = type;
+    this.goTo = goTo;
+  }
+
+  return FileList;
+
+})();
+
+
+
+},{}],3:[function(require,module,exports){
+var FormCard,
+  bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
+
+module.exports = FormCard = (function() {
+  FormCard.prototype.overlay = null;
+
+  FormCard.prototype.box = null;
+
+  FormCard.prototype.inputs = [];
+
+  FormCard.prototype.callback = null;
+
+  function FormCard(data, callback) {
+    var button, closeButton, i, inp, j, label, len, len1, node, option, optionElt, ref, ref1, selectElt;
+    if (callback == null) {
+      callback = function() {};
+    }
+    this._onSubmit = bind(this._onSubmit, this);
+    this._onClose = bind(this._onClose, this);
+    if (document.getElementById('card').innerHTML !== "") {
+      return;
+    }
+    if (!Array.isArray(data)) {
+      return;
+    }
+    this.callback = callback;
+    this.overlay = document.querySelector('div#card-overlay');
+    this.overlay.classList.remove('hidden');
+    this.overlay.classList.add('shown');
+    this.box = document.getElementById('card');
+    for (i = 0, len = data.length; i < len; i++) {
+      inp = data[i];
+      if (inp.type === "list") {
+        if (inp.label !== void 0) {
+          label = document.createElement('label');
+          label.innerHTML = inp.label;
+          this.box.appendChild(label);
+        }
+        selectElt = document.createElement('select');
+        ref = inp.options;
+        for (j = 0, len1 = ref.length; j < len1; j++) {
+          option = ref[j];
+          optionElt = document.createElement('option');
+          optionElt.textContent = option;
+          optionElt.value = option;
+          selectElt.appendChild(optionElt);
+        }
+        this.box.appendChild(selectElt);
+        this.inputs.push(selectElt);
+      } else {
+        if (inp.label != null) {
+          label = document.createElement('label');
+          label.innerHTML = inp.label;
+          this.box.appendChild(label);
+        }
+        node = document.createElement('input');
+        node.type = inp.type;
+        if (inp.placeholder != null) {
+          if ((ref1 = inp.value) != null ? ref1 : node.placeholder = inp.placeholder) {
+            node.value = inp.value;
+          }
+        }
+        this.box.appendChild(node);
+        this.inputs.push(node);
+      }
+    }
+    button = document.createElement('button');
+    button.innerHTML = "Submit";
+    closeButton = document.createElement('button');
+    closeButton.innerHTML = "x";
+    closeButton.classList.add('close-button');
+    this.box.appendChild(closeButton);
+    this.box.appendChild(button);
+    closeButton.addEventListener('click', this._onClose);
+    button.addEventListener('click', this._onSubmit);
+  }
+
+  FormCard.prototype._onClose = function(e) {
+    e.preventDefault();
+    this.box.innerHTML = "";
+    this.overlay.classList.remove('shown');
+    return this.overlay.classList.add('hidden');
+  };
+
+  FormCard.prototype._onSubmit = function(e) {
+    var i, input, j, len, len1, out, ref, ref1;
+    e.preventDefault();
+    out = [];
+    ref = this.inputs;
+    for (i = 0, len = ref.length; i < len; i++) {
+      input = ref[i];
+      out.push(input.value);
+    }
+    ref1 = this.inputs;
+    for (j = 0, len1 = ref1.length; j < len1; j++) {
+      input = ref1[j];
+      this.inputs.splice(this.inputs.indexOf(input, 1));
+    }
+    this.box.innerHTML = "";
+    this.overlay.classList.remove('shown');
+    this.overlay.classList.add('hidden');
+    return this.callback(out);
+  };
+
+  return FormCard;
+
+})();
+
+
+
+},{}],4:[function(require,module,exports){
 var InfoCard,
   bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
 
 module.exports = InfoCard = (function() {
   InfoCard.prototype.overlay = void 0;
 
-  function InfoCard(content, callback) {
-    var box, button, height, p, width;
+  InfoCard.prototype.box = null;
+
+  function InfoCard(content) {
+    var button, p;
     this.content = content;
-    if (callback == null) {
-      callback = this._onCloseButtonClick;
-    }
     this._onCloseButtonClick = bind(this._onCloseButtonClick, this);
-    width = window.innerWidth;
-    height = window.innerHeight;
+    if (document.getElementById('card').innerHTML === "" || this.content === "") {
+      return;
+    }
     this.overlay = document.getElementById('card-overlay');
     this.overlay.classList.add('shown');
-    box = document.getElementById('card');
+    this.box = document.getElementById('card');
     p = document.createElement('p');
     p.innerHTML = this.content;
     button = document.createElement('button');
     button.innerHTML = "Close";
     button.addEventListener('click', this._onCloseButtonClick);
-    box.appendChild(p);
-    box.appendChild(button);
+    this.box.appendChild(p);
+    this.box.appendChild(button);
   }
 
   InfoCard.prototype._onCloseButtonClick = function(e) {
-    return this.overlay.style.display = "none";
+    this.box.innerHTML = "";
+    this.overlay.classList.remove('shown');
+    return this.overlay.classList.add('hidden');
   };
 
   return InfoCard;
@@ -119,7 +257,7 @@ module.exports = InfoCard = (function() {
 
 
 
-},{}],3:[function(require,module,exports){
+},{}],5:[function(require,module,exports){
 var AppCtrl;
 
 AppCtrl = function($scope, $location) {
@@ -133,7 +271,7 @@ module.exports = AppCtrl;
 
 
 
-},{}],4:[function(require,module,exports){
+},{}],6:[function(require,module,exports){
 var CreateCtrl;
 
 CreateCtrl = function($scope, Socket, Files, $location) {
@@ -167,7 +305,7 @@ module.exports = CreateCtrl;
 
 
 
-},{}],5:[function(require,module,exports){
+},{}],7:[function(require,module,exports){
 var EditCtrl;
 
 EditCtrl = function($scope, Socket, $routeParams, $location) {
@@ -217,7 +355,7 @@ module.exports = EditCtrl;
 
 
 
-},{}],6:[function(require,module,exports){
+},{}],8:[function(require,module,exports){
 var FileCtrl;
 
 FileCtrl = function($scope, Socket, $routeParams, $location, $sce) {
@@ -243,17 +381,21 @@ module.exports = FileCtrl;
 
 
 
-},{}],7:[function(require,module,exports){
-var FilesCtrl, InfoCard;
+},{}],9:[function(require,module,exports){
+var FileList, FilesCtrl, FormCard, InfoCard;
 
 InfoCard = require('../class/InfoCard');
 
+FormCard = require('../class/FormCard');
+
+FileList = require('../class/FileList');
+
 FilesCtrl = function($scope, Socket, Files, $location) {
+  var _onCreate;
   $scope.files = [];
   $scope.q = '';
   Files.history.push("root");
   Files.setCurrentFolderId(Files.history[Files.history.length - 1]);
-  new InfoCard("Ceci est un test");
   Socket.emit('getFiles', Files.getCurrentFolderId());
   Socket.on('files', function(files) {
     if (files != null) {
@@ -295,8 +437,33 @@ FilesCtrl = function($scope, Socket, Files, $location) {
     return $location.path('/home');
   };
   $scope.goCreate = function() {
-    return $location.path('/create');
+    return new FormCard([
+      {
+        type: "text",
+        label: "Name"
+      }, {
+        label: "Type",
+        options: ["text", "folder"],
+        type: "list"
+      }
+    ], _onCreate);
   };
+  _onCreate = (function(_this) {
+    return function(data) {
+      var file;
+      file = {
+        type: data[1],
+        name: data[0],
+        parent: Files.getCurrentFolderId()
+      };
+      if (file.name === "" || file.type === "") {
+        new InfoCard("Can not create file. Name not specified.");
+        return;
+      }
+      Socket.emit("newFile", file);
+      return $location.path("/home");
+    };
+  })(this);
   return $scope.updateCurrentFolder = function() {
     if (Files.getCurrentFolderId() === "root") {
       alert('You can not update the root folder.');
@@ -311,7 +478,7 @@ module.exports = FilesCtrl;
 
 
 
-},{"../class/InfoCard":2}],8:[function(require,module,exports){
+},{"../class/FileList":2,"../class/FormCard":3,"../class/InfoCard":4}],10:[function(require,module,exports){
 var UpdateCtrl;
 
 UpdateCtrl = function($scope, Socket, $routeParams, $location) {
@@ -332,7 +499,7 @@ module.exports = UpdateCtrl;
 
 
 
-},{}],9:[function(require,module,exports){
+},{}],11:[function(require,module,exports){
 var Files;
 
 Files = function(Socket) {
@@ -365,7 +532,7 @@ module.exports = Files;
 
 
 
-},{}],10:[function(require,module,exports){
+},{}],12:[function(require,module,exports){
 var Socket, socketServer;
 
 socketServer = document.domain;
