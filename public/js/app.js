@@ -81,7 +81,45 @@ app.config([
 
 
 
-},{"./controllers/AppCtrl":2,"./controllers/CreateCtrl":3,"./controllers/EditCtrl":4,"./controllers/FileCtrl":5,"./controllers/FilesCtrl":6,"./controllers/UpdateCtrl":7,"./services/Files":8,"./services/Socket":9}],2:[function(require,module,exports){
+},{"./controllers/AppCtrl":3,"./controllers/CreateCtrl":4,"./controllers/EditCtrl":5,"./controllers/FileCtrl":6,"./controllers/FilesCtrl":7,"./controllers/UpdateCtrl":8,"./services/Files":9,"./services/Socket":10}],2:[function(require,module,exports){
+var InfoCard,
+  bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
+
+module.exports = InfoCard = (function() {
+  InfoCard.prototype.overlay = void 0;
+
+  function InfoCard(content, callback) {
+    var box, button, height, p, width;
+    this.content = content;
+    if (callback == null) {
+      callback = this._onCloseButtonClick;
+    }
+    this._onCloseButtonClick = bind(this._onCloseButtonClick, this);
+    width = window.innerWidth;
+    height = window.innerHeight;
+    this.overlay = document.getElementById('card-overlay');
+    this.overlay.classList.add('shown');
+    box = document.getElementById('card');
+    p = document.createElement('p');
+    p.innerHTML = this.content;
+    button = document.createElement('button');
+    button.innerHTML = "Close";
+    button.addEventListener('click', this._onCloseButtonClick);
+    box.appendChild(p);
+    box.appendChild(button);
+  }
+
+  InfoCard.prototype._onCloseButtonClick = function(e) {
+    return this.overlay.style.display = "none";
+  };
+
+  return InfoCard;
+
+})();
+
+
+
+},{}],3:[function(require,module,exports){
 var AppCtrl;
 
 AppCtrl = function($scope, $location) {
@@ -95,7 +133,7 @@ module.exports = AppCtrl;
 
 
 
-},{}],3:[function(require,module,exports){
+},{}],4:[function(require,module,exports){
 var CreateCtrl;
 
 CreateCtrl = function($scope, Socket, Files, $location) {
@@ -129,7 +167,7 @@ module.exports = CreateCtrl;
 
 
 
-},{}],4:[function(require,module,exports){
+},{}],5:[function(require,module,exports){
 var EditCtrl;
 
 EditCtrl = function($scope, Socket, $routeParams, $location) {
@@ -179,7 +217,7 @@ module.exports = EditCtrl;
 
 
 
-},{}],5:[function(require,module,exports){
+},{}],6:[function(require,module,exports){
 var FileCtrl;
 
 FileCtrl = function($scope, Socket, $routeParams, $location, $sce) {
@@ -205,14 +243,17 @@ module.exports = FileCtrl;
 
 
 
-},{}],6:[function(require,module,exports){
-var FilesCtrl;
+},{}],7:[function(require,module,exports){
+var FilesCtrl, InfoCard;
+
+InfoCard = require('../class/InfoCard');
 
 FilesCtrl = function($scope, Socket, Files, $location) {
   $scope.files = [];
   $scope.q = '';
   Files.history.push("root");
   Files.setCurrentFolderId(Files.history[Files.history.length - 1]);
+  new InfoCard("Ceci est un test");
   Socket.emit('getFiles', Files.getCurrentFolderId());
   Socket.on('files', function(files) {
     if (files != null) {
@@ -270,7 +311,7 @@ module.exports = FilesCtrl;
 
 
 
-},{}],7:[function(require,module,exports){
+},{"../class/InfoCard":2}],8:[function(require,module,exports){
 var UpdateCtrl;
 
 UpdateCtrl = function($scope, Socket, $routeParams, $location) {
@@ -291,7 +332,7 @@ module.exports = UpdateCtrl;
 
 
 
-},{}],8:[function(require,module,exports){
+},{}],9:[function(require,module,exports){
 var Files;
 
 Files = function(Socket) {
@@ -324,7 +365,7 @@ module.exports = Files;
 
 
 
-},{}],9:[function(require,module,exports){
+},{}],10:[function(require,module,exports){
 var Socket, socketServer;
 
 socketServer = document.domain;

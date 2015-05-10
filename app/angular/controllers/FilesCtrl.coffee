@@ -1,9 +1,13 @@
+InfoCard = require('../class/InfoCard')
+
 FilesCtrl = ($scope, Socket, Files, $location) ->
 	$scope.files = []
 	$scope.q = ''
 	Files.history.push "root" 
 
 	Files.setCurrentFolderId Files.history[Files.history.length-1]
+
+	new InfoCard "Ceci est un test"
 	
 	Socket.emit 'getFiles', Files.getCurrentFolderId()
 
