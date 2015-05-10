@@ -19,7 +19,7 @@ module.exports = class Collection
 	add : (obj) ->
 		return if not obj?
 
-		data = JSON.parse(fs.readFileSync @url)
+		data = JSON.parse(fs.readFileSync(@url))
 		return if not Array.isArray data
 
 		if Array.isArray obj
@@ -67,6 +67,7 @@ module.exports = class Collection
 			continue if !obj?
 			if obj._id == id
 				data.splice i, 1
+				data = JSON.stringify(data, null, 2)
 				fs.writeFileSync @url, data
 				return true
 		false
@@ -79,8 +80,10 @@ module.exports = class Collection
 			if temp._id == obj._id
 				data[i] = obj
 
+		data = JSON.stringify data, null, 2
+		fs.writeFileSync @url, data
+
 	removeCollection : ->
-		console.log @url
 		fs.unlink @url, (e) -> if e? then console.log e else console.log "Database : Removed file #{ @collectionName }.json"
 
 	getName : -> @collectionName
