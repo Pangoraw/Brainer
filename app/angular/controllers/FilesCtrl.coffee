@@ -1,4 +1,6 @@
 InfoCard = require('../class/InfoCard')
+FormCard = require('../class/FormCard')
+FileList = require('../class/FileList')
 
 FilesCtrl = ($scope, Socket, Files, $location) ->
 	$scope.files = []
@@ -7,8 +9,6 @@ FilesCtrl = ($scope, Socket, Files, $location) ->
 
 	Files.setCurrentFolderId Files.history[Files.history.length-1]
 
-	new InfoCard "Ceci est un test"
-	
 	Socket.emit 'getFiles', Files.getCurrentFolderId()
 
 	Socket.on 'files', (files) ->
@@ -41,9 +41,13 @@ FilesCtrl = ($scope, Socket, Files, $location) ->
 	$scope.goHome = ->
 		$location.path '/home'
 
-	$scope.goCreate = ->
-		$location.path '/create'
+	$scope.goCreate = -> new FormCard [ { type : "text", label : "Name" }, { label : "Type", options : [ "text", "folder" ], type : "list" } ], _onCreate
 
+	_onCreate = ( data ) =>
+		file = { type : data[1], name : data[0], parent : Files.getCurrentFolderId() }
+		if file.name == "" or file.type == "" then new InfoCard "Can not create file. Name not specified."; return 
+		Socket.emit "newFile", file
+		$location.path "/home"
 
 	$scope.updateCurrentFolder = ->
 		if Files.getCurrentFolderId() == "root" then alert 'You can not update the root folder.'; return 
