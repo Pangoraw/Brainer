@@ -3,7 +3,9 @@ module.exports = class InfoCard
 	overlay : undefined
 	box : null
 	
-	constructor : (@content, callback) ->
+	constructor : (@content) ->
+		return if document.getElementById('card').innerHTML == "" or @content == ""
+
 		@overlay = document.getElementById('card-overlay')
 		@overlay.classList.add 'shown'
 		
