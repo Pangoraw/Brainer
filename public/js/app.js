@@ -88,29 +88,28 @@ var InfoCard,
 module.exports = InfoCard = (function() {
   InfoCard.prototype.overlay = void 0;
 
+  InfoCard.prototype.box = null;
+
   function InfoCard(content, callback) {
-    var box, button, height, p, width;
+    var button, p;
     this.content = content;
-    if (callback == null) {
-      callback = this._onCloseButtonClick;
-    }
     this._onCloseButtonClick = bind(this._onCloseButtonClick, this);
-    width = window.innerWidth;
-    height = window.innerHeight;
     this.overlay = document.getElementById('card-overlay');
     this.overlay.classList.add('shown');
-    box = document.getElementById('card');
+    this.box = document.getElementById('card');
     p = document.createElement('p');
     p.innerHTML = this.content;
     button = document.createElement('button');
     button.innerHTML = "Close";
     button.addEventListener('click', this._onCloseButtonClick);
-    box.appendChild(p);
-    box.appendChild(button);
+    this.box.appendChild(p);
+    this.box.appendChild(button);
   }
 
   InfoCard.prototype._onCloseButtonClick = function(e) {
-    return this.overlay.style.display = "none";
+    this.box.innerHTML = "";
+    this.overlay.classList.remove('shown');
+    return this.overlay.classList.add('hidden');
   };
 
   return InfoCard;
