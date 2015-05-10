@@ -1,15 +1,13 @@
 module.exports = class InfoCard
 
 	overlay : undefined
+	box : null
 	
-	constructor : (@content, callback=@_onCloseButtonClick) ->
-		width = window.innerWidth
-		height = window.innerHeight
-
+	constructor : (@content, callback) ->
 		@overlay = document.getElementById('card-overlay')
 		@overlay.classList.add 'shown'
 		
-		box = document.getElementById('card')
+		@box = document.getElementById('card')
 
 		p = document.createElement('p')
 		p.innerHTML = @content
@@ -19,8 +17,10 @@ module.exports = class InfoCard
 
 		button.addEventListener 'click', @_onCloseButtonClick
 
-		box.appendChild(p)
-		box.appendChild(button)
+		@box.appendChild(p)
+		@box.appendChild(button)
 		
 	_onCloseButtonClick : (e) =>
-		@overlay.style.display = "none"
+		@box.innerHTML = ""
+		@overlay.classList.remove 'shown'
+		@overlay.classList.add 'hidden'
