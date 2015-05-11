@@ -1,9 +1,8 @@
 extends layout
 
 block content
-  div#card-overlay
-    div.helper
-      div#card
+  div#card-overlay.hidden
+    div#card
 
   nav.header(ng-controller="AppCtrl")
     div.menu-icon.is-closed
@@ -13,16 +12,13 @@ block content
     .control-panel
       button(ng-click="goBackInHistory()") <-
       button(ng-click="goBackInTree()") ^
-      button(ng-click="goCreate()") + 
       button(ng-click="goHome()") Home
-      button(ng-click="updateCurrentFolder()") Update Folder
-      button.reload(ng-click="refresh()") R
+      button(ng-click="goCreate()") Create 
+      button(ng-click="deleteFile()") Delete
+      button.change-name(ng-click="changeName()") Change Name
+      button.reload(ng-click="refresh()") Refresh
       input.search(type="text", placeholder="Search in folder...", ng-model="q")
-    ul
-      li(ng-repeat="file in files | filter : q ", class="animated slideInLeft")
-        button.files(ng-click="request(file._id, file.type)")
-          p.name {{file.name}}
-          p.type {{file.type}}
+    ul#file-list
 
   div.view.not-pushed(ng-view)
 
