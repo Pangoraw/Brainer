@@ -38,6 +38,6 @@ exports.configure = (io) ->
 				FilesDatabase.findFiles file.parent, (files) ->
 					socket.emit 'files', files
 
-		socket.on 'updateFile', (file, callback=->) ->
+		socket.on 'updateFile', (file) ->
 			FilesDatabase.updateFile file
 
