@@ -38,8 +38,11 @@ nav.files-list
 	.control-panel
 		button
 			float left
-		button.reload
-			width 31px
+			width 20%
+			&.change-name
+				width 50%
+			&.reload
+				width 50%
 		input.search
 			width 100%
 	button 
@@ -49,7 +52,7 @@ nav.files-list
 		margin 0
 		padding 0
 		font-size 1.5em
-
+		height 100%
 	li
 		height 30px
 		background-color #768e0eff
@@ -59,6 +62,8 @@ nav.files-list
 		cursor pointer
 		color rgba(#fff,0.9)
 		border 2px solid transparent
+		&.selected
+			background-color #61740D
 		> button.files
 			background none
 			border none
@@ -68,22 +73,22 @@ nav.files-list
 			position relative
 			top 50%
 			transform translateY(-50%)
-			> p.name
-				overflow hidden
-				float left
-				font-size 23px
-				color white
-				font-family 'Kapak'
-				text-decoration none
-				text-transform capitalize
-				margin-bottom 10px
-			> p.type
-				font-family Ubuntu
-				float right
-				color #ddd
-				text-transform uppercase
-				font-size 15px
-				font-style italic
+p.name
+	overflow hidden
+	float left
+	font-size 23px
+	color white
+	font-family 'Kapak'
+	text-decoration none
+	text-transform capitalize
+	margin-bottom 10px
+p.type
+	font-family Ubuntu
+	float right
+	color #ddd
+	text-transform uppercase
+	font-size 15px
+	font-style italic
 				 
 				
 

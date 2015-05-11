@@ -149,9 +149,13 @@ nav.files-list.is-open {
 }
 nav.files-list .control-panel button {
   float: left;
+  width: 20%;
+}
+nav.files-list .control-panel button.change-name {
+  width: 50%;
 }
 nav.files-list .control-panel button.reload {
-  width: 31px;
+  width: 50%;
 }
 nav.files-list .control-panel input.search {
   width: 100%;
@@ -164,6 +168,7 @@ nav.files-list ul {
   margin: 0;
   padding: 0;
   font-size: 1.5em;
+  height: 100%;
 }
 nav.files-list li {
   height: 30px;
@@ -174,6 +179,9 @@ nav.files-list li {
   cursor: pointer;
   color: rgba(255,255,255,0.9);
   border: 2px solid transparent;
+}
+nav.files-list li.selected {
+  background-color: #61740d;
 }
 nav.files-list li > button.files {
   background: none;
@@ -189,7 +197,7 @@ nav.files-list li > button.files {
   -ms-transform: translateY(-50%);
   transform: translateY(-50%);
 }
-nav.files-list li > button.files > p.name {
+p.name {
   overflow: hidden;
   float: left;
   font-size: 23px;
@@ -199,7 +207,7 @@ nav.files-list li > button.files > p.name {
   text-transform: capitalize;
   margin-bottom: 10px;
 }
-nav.files-list li > button.files > p.type {
+p.type {
   font-family: Ubuntu;
   float: right;
   color: #ddd;
