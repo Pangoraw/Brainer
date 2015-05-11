@@ -28,8 +28,8 @@ module.exports = class FormCard
 
 				for option in inp.options
 					optionElt = document.createElement('option')
-					optionElt.textContent = option
-					optionElt.value = option
+					optionElt.textContent = option.name
+					optionElt.value = option.value
 					selectElt.appendChild optionElt
 				@box.appendChild selectElt
 				@inputs.push selectElt
