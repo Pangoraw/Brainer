@@ -1,7 +1,7 @@
 Collection = require './collection'
 
 module.exports = class FilesHandler extends Collection
-	constructor : (dirName) =>
+	constructor : (dirName) ->
 		super dirName, "files"
 
 	findFiles : (parentId, callback) =>
