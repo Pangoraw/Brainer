@@ -1,5 +1,6 @@
 EventEmitter = require('events')
-FormCard = require('./FormCard')
+FormCard 		 = require('./FormCard')
+InfoCard 		 = require('./InfoCard')
 
 module.exports = class FileList extends EventEmitter
 
@@ -8,7 +9,9 @@ module.exports = class FileList extends EventEmitter
 	selectedNodes : []
 
 	constructor : ( holderId ) ->
-		return if not holderId ?
+		return if !holderId?
+
+		new InfoCard('salut')
 
 		document.querySelector "ul#file-list"
 
@@ -22,6 +25,8 @@ module.exports = class FileList extends EventEmitter
 		-1
 
 	append : ( file ) ->
+		return if !file?
+
 		fileElt = document.createElement 'li'
 		fileElt.classList.add 'animated'
 		fileElt.classList.add 'slideInLeft'
@@ -43,8 +48,11 @@ module.exports = class FileList extends EventEmitter
 
 	clean : -> @holder.innerHTML = ""
 
-	delete : -> @emit 'delete', @getFileFromName(@selectedNodes[0].children[0].innerHTML)
-	update : -> 
+	delete : ->
+		if @selectedNodes.length == 0 then new InfoCard "You can not delete. No file selected."; return
+		@emit 'delete', @getFileFromName(@selectedNodes[0].children[0].innerHTML)
+	update : ->
+		if @selectedNodes.length == 0 then new InfoCard "You can not update. No file selected."; return
 		oldName = @selectedNodes[0].children[0].innerHTML
 		new FormCard [ { type : 'text', label : 'New name' } ], ( data ) =>
 			newName = data[0]
