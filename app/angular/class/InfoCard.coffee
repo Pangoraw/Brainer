@@ -3,13 +3,15 @@ module.exports = class InfoCard
 	overlay : undefined
 	box : null
 	
-	constructor : (@content) ->
-		return if document.getElementById('card').innerHTML == "" or @content == ""
+	constructor : ( @content ) ->
+		return if !@content?
 
 		@overlay = document.getElementById('card-overlay')
 		@overlay.classList.add 'shown'
+		@overlay.classList.remove 'hidden'
 		
 		@box = document.getElementById('card')
+		@box.innerHTML = ""
 
 		p = document.createElement('p')
 		p.innerHTML = @content
@@ -18,6 +20,7 @@ module.exports = class InfoCard
 		button.innerHTML = "Close"
 
 		button.addEventListener 'click', @_onCloseButtonClick
+		@overlay.addEventListener 'click', @_onCloseButtonClick
 
 		@box.appendChild(p)
 		@box.appendChild(button)

@@ -82,7 +82,7 @@ app.config([
 
 
 },{"./controllers/AppCtrl":5,"./controllers/CreateCtrl":6,"./controllers/EditCtrl":7,"./controllers/FileCtrl":8,"./controllers/FilesCtrl":9,"./controllers/UpdateCtrl":10,"./services/Files":11,"./services/Socket":12}],2:[function(require,module,exports){
-var EventEmitter, FileList, FormCard,
+var EventEmitter, FileList, FormCard, InfoCard,
   bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
   extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
   hasProp = {}.hasOwnProperty;
@@ -90,6 +90,8 @@ var EventEmitter, FileList, FormCard,
 EventEmitter = require('events');
 
 FormCard = require('./FormCard');
+
+InfoCard = require('./InfoCard');
 
 module.exports = FileList = (function(superClass) {
   extend(FileList, superClass);
@@ -102,10 +104,11 @@ module.exports = FileList = (function(superClass) {
 
   function FileList(holderId) {
     this._onClick = bind(this._onClick, this);
-    var ref;
-    if ((ref = !holderId) != null ? ref : document.querySelector("ul#file-list")) {
+    if (holderId == null) {
       return;
     }
+    new InfoCard('salut');
+    document.querySelector("ul#file-list");
     this.holder = document.querySelector("ul#file-list");
     this.holder.addEventListener('click', this._onClick);
   }
@@ -124,6 +127,9 @@ module.exports = FileList = (function(superClass) {
 
   FileList.prototype.append = function(file) {
     var fileElt, pName, pType;
+    if (file == null) {
+      return;
+    }
     fileElt = document.createElement('li');
     fileElt.classList.add('animated');
     fileElt.classList.add('slideInLeft');
@@ -145,11 +151,19 @@ module.exports = FileList = (function(superClass) {
   };
 
   FileList.prototype["delete"] = function() {
+    if (this.selectedNodes.length === 0) {
+      new InfoCard("You can not delete. No file selected.");
+      return;
+    }
     return this.emit('delete', this.getFileFromName(this.selectedNodes[0].children[0].innerHTML));
   };
 
   FileList.prototype.update = function() {
     var oldName;
+    if (this.selectedNodes.length === 0) {
+      new InfoCard("You can not update. No file selected.");
+      return;
+    }
     oldName = this.selectedNodes[0].children[0].innerHTML;
     return new FormCard([
       {
@@ -212,7 +226,7 @@ module.exports = FileList = (function(superClass) {
 
 
 
-},{"./FormCard":3,"events":13}],3:[function(require,module,exports){
+},{"./FormCard":3,"./InfoCard":4,"events":13}],3:[function(require,module,exports){
 var FormCard,
   bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
 
@@ -336,17 +350,20 @@ module.exports = InfoCard = (function() {
     var button, p;
     this.content = content;
     this._onCloseButtonClick = bind(this._onCloseButtonClick, this);
-    if (document.getElementById('card').innerHTML === "" || this.content === "") {
+    if (this.content == null) {
       return;
     }
     this.overlay = document.getElementById('card-overlay');
     this.overlay.classList.add('shown');
+    this.overlay.classList.remove('hidden');
     this.box = document.getElementById('card');
+    this.box.innerHTML = "";
     p = document.createElement('p');
     p.innerHTML = this.content;
     button = document.createElement('button');
     button.innerHTML = "Close";
     button.addEventListener('click', this._onCloseButtonClick);
+    this.overlay.addEventListener('click', this._onCloseButtonClick);
     this.box.appendChild(p);
     this.box.appendChild(button);
   }
