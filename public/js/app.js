@@ -107,7 +107,6 @@ module.exports = FileList = (function(superClass) {
     if (holderId == null) {
       return;
     }
-    new InfoCard('salut');
     document.querySelector("ul#file-list");
     this.holder = document.querySelector("ul#file-list");
     this.holder.addEventListener('click', this._onClick);
