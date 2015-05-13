@@ -183,21 +183,16 @@ nav.files-list li {
 nav.files-list li.selected {
   background-color: #61740d;
 }
-nav.files-list li > button.files {
-  background: none;
-  border: none;
-  width: 100%;
-  height: 100%;
-  padding: 0;
-  position: relative;
-  top: 50%;
-  -webkit-transform: translateY(-50%);
-  -moz-transform: translateY(-50%);
-  -o-transform: translateY(-50%);
-  -ms-transform: translateY(-50%);
-  transform: translateY(-50%);
-}
-p.name {
+nav.files-list li > p.name {
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -webkit-user-drag: none;
+  user-drag: none;
   overflow: hidden;
   float: left;
   font-size: 23px;
@@ -207,7 +202,16 @@ p.name {
   text-transform: capitalize;
   margin-bottom: 10px;
 }
-p.type {
+nav.files-list li > p.type {
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -webkit-user-drag: none;
+  user-drag: none;
   font-family: Ubuntu;
   float: right;
   color: #ddd;
