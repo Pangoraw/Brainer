@@ -11,8 +11,6 @@ module.exports = class FileList extends EventEmitter
 	constructor : ( holderId ) ->
 		return if !holderId?
 
-		new InfoCard('salut')
-
 		document.querySelector "ul#file-list"
 
 		@holder = document.querySelector "ul#file-list"
