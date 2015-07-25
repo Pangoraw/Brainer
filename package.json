@@ -23,5 +23,7 @@
     "jade": "^1.9.2",
     "mongodb": "^2.0.31"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "perfect-resize": "^2.1.1"
+  }
 }

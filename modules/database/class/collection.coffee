@@ -75,7 +75,7 @@ module.exports = class Collection
 	update : (obj) ->
 		data = JSON.parse(fs.readFileSync @url)
 
-		for i in [0...data.length-1]
+		for i in [0..data.length-1]
 			temp = data[i]
 			if temp._id == obj._id
 				data[i] = obj

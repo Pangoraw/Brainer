@@ -4,7 +4,7 @@
 /*
 	Declare app level module which depends on filters, services, and directives
  */
-var AppCtrl, CreateCtrl, EditCtrl, FileCtrl, FilesCtrl, UpdateCtrl, app;
+var AppCtrl, EditCtrl, FileCtrl, FilesCtrl, app;
 
 app = angular.module("myApp", ["ngRoute", "ngSanitize"]);
 
@@ -26,25 +26,17 @@ AppCtrl = require('./controllers/AppCtrl');
 
 FilesCtrl = require('./controllers/FilesCtrl');
 
-CreateCtrl = require('./controllers/CreateCtrl');
-
 FileCtrl = require('./controllers/FileCtrl');
 
 EditCtrl = require('./controllers/EditCtrl');
-
-UpdateCtrl = require('./controllers/UpdateCtrl');
 
 app.controller("AppCtrl", ["$scope", "$location", AppCtrl]);
 
 app.controller("FilesCtrl", ["$scope", "Socket", "Files", "$location", FilesCtrl]);
 
-app.controller("CreateCtrl", ["$scope", "Socket", "Files", "$location", CreateCtrl]);
-
 app.controller("FileCtrl", ["$scope", "Socket", "$routeParams", "$location", "$sce", FileCtrl]);
 
 app.controller("EditCtrl", ["$scope", "Socket", "$routeParams", "$location", EditCtrl]);
-
-app.controller("UpdateCtrl", ["$scope", "Socket", "$routeParams", "$location", UpdateCtrl]);
 
 
 /*
@@ -57,10 +49,6 @@ app.config([
       templateUrl: "partials/home",
       controller: AppCtrl
     });
-    $routeProvider.when("/create", {
-      templateUrl: "partials/create",
-      controller: CreateCtrl
-    });
     $routeProvider.when("/file/:id", {
       templateUrl: "partials/file",
       controller: FileCtrl
@@ -68,10 +56,6 @@ app.config([
     $routeProvider.when("/file/edit/:id", {
       templateUrl: "partials/edit",
       controller: EditCtrl
-    });
-    $routeProvider.when("/updateFolder/:id", {
-      templateUrl: "partials/updateFolder",
-      controller: UpdateCtrl
     });
     return $routeProvider.otherwise({
       redirectTo: "/home"
@@ -81,7 +65,7 @@ app.config([
 
 
 
-},{"./controllers/AppCtrl":5,"./controllers/CreateCtrl":6,"./controllers/EditCtrl":7,"./controllers/FileCtrl":8,"./controllers/FilesCtrl":9,"./controllers/UpdateCtrl":10,"./services/Files":11,"./services/Socket":12}],2:[function(require,module,exports){
+},{"./controllers/AppCtrl":6,"./controllers/EditCtrl":7,"./controllers/FileCtrl":8,"./controllers/FilesCtrl":9,"./services/Files":10,"./services/Socket":11}],2:[function(require,module,exports){
 var EventEmitter, FileList, FormCard, InfoCard,
   bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
   extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
@@ -147,6 +131,20 @@ module.exports = FileList = (function(superClass) {
 
   FileList.prototype.clean = function() {
     return this.holder.innerHTML = "";
+  };
+
+  FileList.prototype.edit = function() {
+    var file;
+    if (this.selectedNodes.length === 0) {
+      new InfoCard("You can not edit. No file selected.");
+      return;
+    }
+    file = this.getFileFromName(this.selectedNodes[0].children[0].innerHTML);
+    if (file.type === "folder") {
+      new InfoCard("You can not edit a folder.");
+      return;
+    }
+    return this.emit('edit', file._id);
   };
 
   FileList.prototype["delete"] = function() {
@@ -225,7 +223,7 @@ module.exports = FileList = (function(superClass) {
 
 
 
-},{"./FormCard":3,"./InfoCard":4,"events":13}],3:[function(require,module,exports){
+},{"./FormCard":3,"./InfoCard":4,"events":12}],3:[function(require,module,exports){
 var FormCard,
   bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
 
@@ -380,6 +378,83 @@ module.exports = InfoCard = (function() {
 
 
 },{}],5:[function(require,module,exports){
+var InfoCard, SlideshowHandler,
+  bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
+
+InfoCard = require('./InfoCard');
+
+module.exports = SlideshowHandler = (function() {
+  SlideshowHandler.prototype.index = 0;
+
+  function SlideshowHandler(data) {
+    var cElt, s, sElt;
+    this.data = data;
+    this._onRightClick = bind(this._onRightClick, this);
+    this._onClick = bind(this._onClick, this);
+    if (this.data.length === 0) {
+      new InfoCard("Slideshow is empty");
+    }
+    document.getElementById('text-content').style.display = "none";
+    this.holder = document.getElementById('slideshow-content').children[0];
+    this.infoPanel = document.getElementById('slideshow-content').children[1];
+    s = this.data[this.index];
+    if (s.title != null) {
+      sElt = document.createElement('h1');
+      sElt.textContent = s.title;
+      this.holder.appendChild(sElt);
+    }
+    if (s.content != null) {
+      cElt = document.createElement('p');
+      cElt.textContent = s.content;
+      this.holder.appendChild(cElt);
+    }
+    this.setInfo((this.index + 1) + "/" + this.data.length);
+    document.getElementById('slideshow-content').addEventListener('contextmenu', this._onRightClick);
+    document.getElementById('slideshow-content').addEventListener('click', this._onClick);
+  }
+
+  SlideshowHandler.prototype._onClick = function() {
+    var cElt, s, sElt;
+    this.index++;
+    if (this.index > this.data.length - 1) {
+      new InfoCard("No more slides.");
+      return;
+    }
+    s = this.data[this.index];
+    this.holder.innerHTML = "";
+    if (s.title != null) {
+      sElt = document.createElement('h1');
+      sElt.textContent = s.title;
+      this.holder.appendChild(sElt);
+    }
+    if (s.content != null) {
+      cElt = document.createElement('p');
+      cElt.textContent = s.content;
+      this.holder.appendChild(cElt);
+    }
+    return this.setInfo((this.index + 1) + "/" + this.data.length);
+  };
+
+  SlideshowHandler.prototype._onRightClick = function(e) {
+    e.preventDefault();
+    if (this.index === 0) {
+      return;
+    }
+    this.index = this.index - 2;
+    return this._onClick();
+  };
+
+  SlideshowHandler.prototype.setInfo = function(str) {
+    return this.infoPanel.innerHTML = str;
+  };
+
+  return SlideshowHandler;
+
+})();
+
+
+
+},{"./InfoCard":4}],6:[function(require,module,exports){
 var AppCtrl;
 
 AppCtrl = function($scope, $location) {
@@ -393,63 +468,34 @@ module.exports = AppCtrl;
 
 
 
-},{}],6:[function(require,module,exports){
-var CreateCtrl;
-
-CreateCtrl = function($scope, Socket, Files, $location) {
-  $scope.file = {
-    type: "text",
-    name: "",
-    parent: ""
-  };
-  $scope.parentName = '';
-  if (Files.getCurrentFolderId() !== "root") {
-    Socket.emit('getFolder', Files.getCurrentFolderId());
-    $scope.file.parent = Files.getCurrentFolderId();
-  } else {
-    $scope.file.parent = 'root';
-    $scope.parentName = 'root';
-  }
-  Socket.on('folder', function(folder) {
-    if (folder != null) {
-      return $scope.parentName = folder.name;
-    }
-  });
-  return $scope.create = function() {
-    if ($scope.file.name !== "") {
-      Socket.emit('newFile', $scope.file);
-      return $location.path('/home');
-    }
-  };
-};
-
-module.exports = CreateCtrl;
-
-
-
 },{}],7:[function(require,module,exports){
 var EditCtrl;
 
 EditCtrl = function($scope, Socket, $routeParams, $location) {
   Socket.emit('getFile', $routeParams.id);
   Socket.on('file', function(file) {
+    var options;
     if (file.content == null) {
       file.content = '';
     }
     $scope.file = file;
+    options = {
+      theme: "elegant",
+      viewportMargin: 10,
+      mode: "xml",
+      htmlMode: true,
+      extraKeys: {
+        "Ctrl-Space": "autocomplete"
+      },
+      value: $scope.file.content,
+      lineNumbers: true,
+      cursorScrollMargin: 10
+    };
+    if (file.type === "slideshow") {
+      options.mode = "javascript";
+    }
     if ($scope.mirror == null) {
-      $scope.mirror = CodeMirror(document.getElementById('code'), {
-        theme: "neo",
-        viewportMargin: 10,
-        mode: "xml",
-        htmlMode: true,
-        extraKeys: {
-          "Ctrl-Space": "autocomplete"
-        },
-        value: $scope.file.content,
-        lineNumbers: true,
-        cursorScrollMargin: 10
-      });
+      $scope.mirror = CodeMirror(document.getElementById('code'), options);
     }
     return $scope.mirror.on("changes", function() {
       $scope.changesCounter++;
@@ -478,12 +524,23 @@ module.exports = EditCtrl;
 
 
 },{}],8:[function(require,module,exports){
-var FileCtrl;
+var FileCtrl, Slideshow;
+
+Slideshow = require('../class/SlideshowHandler');
 
 FileCtrl = function($scope, Socket, $routeParams, $location, $sce) {
+  $scope.file = {};
   Socket.emit('getFile', $routeParams.id);
   Socket.on('file', function(file) {
-    return $scope.file = file;
+    var slideShow;
+    if (file.type === "text") {
+      document.getElementById('slideshow-content').style.display = "none";
+      return $scope.file = file;
+    } else if (file.type === "slideshow") {
+      slideShow = new Slideshow(JSON.parse(file.content));
+      $scope.file.name = file.name;
+      return $scope._id = file._id;
+    }
   });
   $scope.getContent = function(content) {
     return $sce.trustAsHtml(content);
@@ -503,7 +560,7 @@ module.exports = FileCtrl;
 
 
 
-},{}],9:[function(require,module,exports){
+},{"../class/SlideshowHandler":5}],9:[function(require,module,exports){
 var FileList, FilesCtrl, FormCard, InfoCard;
 
 InfoCard = require('../class/InfoCard');
@@ -518,6 +575,11 @@ FilesCtrl = function($scope, Socket, Files, $location) {
   $scope.q = '';
   Files.history.push("root");
   FileList = new FileList("file-list");
+  FileList.on('edit', (function(_this) {
+    return function(id) {
+      return $location.path("file/edit/" + id);
+    };
+  })(this));
   FileList.on('update', (function(_this) {
     return function(file) {
       return Socket.emit('updateFile', file);
@@ -531,7 +593,7 @@ FilesCtrl = function($scope, Socket, Files, $location) {
   })(this));
   FileList.on('activated', (function(_this) {
     return function(file) {
-      if (file.type === "text") {
+      if (file.type === "text" || file.type === "slideshow") {
         $location.path("/file/" + file._id).replace();
         return $scope.$apply();
       } else if (file.type === "folder") {
@@ -576,11 +638,10 @@ FilesCtrl = function($scope, Socket, Files, $location) {
   $scope.goBackInHistory = function() {
     var id;
     if (Files.history.length > 2) {
-      id = Files.history[Files.history.length - 2];
+      return id = Files.history[Files.history.length - 2];
     } else {
-      id = "root";
+      return id = "root";
     }
-    return $scope.request(id, 'folder');
   };
   $scope.goBackInTree = function() {
     if (Files.getCurrentFolderId() !== "root") {
@@ -605,6 +666,9 @@ FilesCtrl = function($scope, Socket, Files, $location) {
           }, {
             value: "folder",
             name: "Folder"
+          }, {
+            value: "slideshow",
+            name: "Slideshow"
           }
         ],
         type: "list"
@@ -627,6 +691,9 @@ FilesCtrl = function($scope, Socket, Files, $location) {
       return $location.path("/home");
     };
   })(this);
+  $scope.editFile = function() {
+    return FileList.edit();
+  };
   $scope.changeName = function() {
     return FileList.update();
   };
@@ -640,27 +707,6 @@ module.exports = FilesCtrl;
 
 
 },{"../class/FileList":2,"../class/FormCard":3,"../class/InfoCard":4}],10:[function(require,module,exports){
-var UpdateCtrl;
-
-UpdateCtrl = function($scope, Socket, $routeParams, $location) {
-  Socket.emit('getFolder', $routeParams.id);
-  Socket.on('folder', function(folder) {
-    return $scope.folder = folder;
-  });
-  $scope.update = function() {
-    Socket.emit('updateFile', $scope.folder);
-    return $location.path("/home");
-  };
-  return $scope["delete"] = function() {
-    return Socket.emit('deleteFile', $scope.folder);
-  };
-};
-
-module.exports = UpdateCtrl;
-
-
-
-},{}],11:[function(require,module,exports){
 var Files;
 
 Files = function(Socket) {
@@ -693,7 +739,7 @@ module.exports = Files;
 
 
 
-},{}],12:[function(require,module,exports){
+},{}],11:[function(require,module,exports){
 var Socket, socketServer;
 
 socketServer = document.domain;
@@ -719,7 +765,7 @@ module.exports = Socket;
 
 
 
-},{}],13:[function(require,module,exports){
+},{}],12:[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a

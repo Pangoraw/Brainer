@@ -4,8 +4,11 @@ EditCtrl = ($scope, Socket, $routeParams, $location) ->
 	Socket.on 'file', (file) ->
 		if !file.content? then file.content = ''
 		$scope.file = file
+
+		options = { theme : "elegant", viewportMargin : 10, mode : "xml", htmlMode : true, extraKeys: { "Ctrl-Space": "autocomplete" }, value : $scope.file.content, lineNumbers: true, cursorScrollMargin : 10 }
+		if file.type == "slideshow" then options.mode = "javascript"
 		if !$scope.mirror?
-			$scope.mirror = CodeMirror document.getElementById('code'), { theme : "neo", viewportMargin : 10, mode : "xml", htmlMode : true, extraKeys: { "Ctrl-Space": "autocomplete" }, value : $scope.file.content, lineNumbers: true, cursorScrollMargin : 10 }
+			$scope.mirror = CodeMirror document.getElementById('code'), options
 		$scope.mirror.on "changes", ->
 			$scope.changesCounter++
 			if $scope.changesCounter > $scope.changesToSave

@@ -115,6 +115,12 @@ body {
   display: -ms-flexbox;
   display: box;
   display: flex;
+  -webkit-box-orient: vertical;
+  -moz-box-orient: vertical;
+  -o-box-orient: vertical;
+  -webkit-flex-flow: column;
+  -ms-flex-flow: column;
+  flex-flow: column;
   margin: 0;
   padding: 0;
   background-color: #ddd;
@@ -123,7 +129,28 @@ body {
 /************************************
 *************NAVBAR******************
 ************************************/
+main {
+  height: 100%;
+  -webkit-box-flex: 1;
+  -moz-box-flex: 1;
+  -o-box-flex: 1;
+  box-flex: 1;
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  display: -webkit-box;
+  display: -moz-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: box;
+  display: flex;
+  flex-row: row;
+  margin: 0;
+}
 nav.files-list {
+  flew: 1;
+  overflow: auto;
+  min-width: 225px;
   -webkit-transition: margin-left 0.5s;
   -moz-transition: margin-left 0.5s;
   -o-transition: margin-left 0.5s;
@@ -152,10 +179,13 @@ nav.files-list .control-panel button {
   width: 20%;
 }
 nav.files-list .control-panel button.change-name {
-  width: 50%;
+  width: 40%;
+}
+nav.files-list .control-panel button.edit-file {
+  width: 30%;
 }
 nav.files-list .control-panel button.reload {
-  width: 50%;
+  width: 30%;
 }
 nav.files-list .control-panel input.search {
   width: 100%;
@@ -218,6 +248,44 @@ nav.files-list li > p.type {
   text-transform: uppercase;
   font-size: 15px;
   font-style: italic;
+}
+.sidebar {
+  width: 300px;
+  min-width: 100px;
+}
+.resize-handle.left .resize-handle.right {
+  width: 4px;
+  background: #ccc;
+  cursor: ew-resize;
+}
+.resize-handle.left .resize-handle.right:hover {
+  background: #aaa;
+}
+.resize-handle.top .resize-handle.bottom {
+  height: 4px;
+  background: #ccc;
+  cursor: ns-resize;
+}
+.resize-handle.top .resize-handle.bottom:hover {
+  background: #aaa;
+}
+html.handle-dragging * {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+html.handle-dragging.vertical * {
+  cursor: ew-resize;
+}
+html.handle-dragging.horizontal * {
+  cursor: ns-resize;
+}
+html.handle-dragging iframe {
+  pointer-events: none;
 }
 /************************************
 *************CONTENT*****************

@@ -8,6 +8,7 @@ global-reset()
 
 body
 	display flex
+	flex-flow column
 	margin 0
 	padding 0
 	background-color #ddd
@@ -17,8 +18,16 @@ body
 /************************************
 *************NAVBAR******************
 ************************************/
-
+main
+	height 100%
+	flex 1
+	display flex
+	flex-row row
+	margin 0
 nav.files-list
+	flew 1
+	overflow auto
+	min-width 225px
 	transition margin-left 0.5s
 	&.is-closed
 		margin-left -251px
@@ -40,9 +49,11 @@ nav.files-list
 			float left
 			width 20%
 			&.change-name
-				width 50%
+				width 40%
+			&.edit-file
+				width 30%
 			&.reload
-				width 50%
+				width 30%
 		input.search
 			width 100%
 	button 
@@ -92,8 +103,42 @@ nav.files-list
 			text-transform uppercase
 			font-size 15px
 			font-style italic
-				 
-				
+
+.sidebar
+	width 300px
+	min-width 100px
+
+.resize-handle
+	&.left &.right
+		&:hover 
+			background #aaa
+		width 4px
+		background #ccc
+		cursor ew-resize
+	&.top &.bottom
+		&:hover 
+			background #aaa
+		height 4px
+		background #ccc
+		cursor ns-resize
+
+html.handle-dragging * 
+	-webkit-user-select none
+	-moz-user-select none
+	-ms-user-select none
+	user-select none
+
+html.handle-dragging.vertical * {
+	cursor: ew-resize;
+}
+
+html.handle-dragging.horizontal * {
+	cursor: ns-resize;
+}
+
+html.handle-dragging iframe {
+	pointer-events: none;
+}
 
 /************************************
 *************CONTENT*****************

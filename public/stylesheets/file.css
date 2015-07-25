@@ -1,40 +1,10 @@
-nav#info {
-  transition: margin-right 0.3s;
-  position: relative;
-  right: 0;
-  top: 0;
-  float: right;
-  background-color: #89a02c;
-  height: 100%;
-  width: 100px;
-  border-left: 2px solid rgba(0,0,0,0.1);
-}
-nav#info.is-open {
-  margin-right: 0px;
-}
-nav#info.is-closed {
-  margin-right: -102px;
-}
-nav#info h1#file-name {
-  background-color: #57661c;
-  width: 100%;
-  font-family: 'PoetsenOne';
-  color: #fff;
-  text-transform: capitalize;
-  text-align: center;
-  padding-bottom: 5px;
-  padding-top: 5px;
-}
-nav#info div.button-panel {
-  margin-top: 10px;
-}
-div#file-content {
+div#text-content {
   height: 95%;
   overflow-y: scroll;
   text-align: center;
   line-height: 3em;
 }
-div#file-content h1 {
+div#text-content h1 {
   text-align: center;
   margin-top: 10px;
   font-size: 50px;
@@ -42,29 +12,64 @@ div#file-content h1 {
   text-transform: capitalize;
   color: #89a02c;
 }
-div#file-content h2 {
+div#text-content h2 {
   padding: 10px;
   font-size: 30px;
   font-family: 'PoetsenOne';
   text-transform: capitalize;
   color: #89a02c;
 }
-div#file-content h3 {
+div#text-content h3 {
   padding: 10px;
   text-align: center;
   font-size: 15px;
   color: #555;
   text-decoration: underline;
 }
-div#file-content p {
+div#text-content p {
   font-size: 15px;
   color: #555;
 }
-div#file-content ul {
+div#text-content ul {
   text-align: center;
   list-style-type: disc;
 }
-div#file-content ul li {
+div#text-content ul li {
   font-size: 15px;
   color: #888;
+}
+div#slideshow-content {
+  height: 100%;
+  width: 100%;
+  text-align: center;
+  background-color: #85b262;
+}
+div#slideshow-content p.info {
+  display: inline;
+  position: relative;
+  top: 0%;
+  left: calc(-50% + 18px);
+  background-color: rgba(0,0,0,0.3);
+  padding: 3px;
+  text-align: center;
+  width: 38px;
+}
+div#slideshow-content .box {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-15%);
+  height: 100%;
+}
+div#slideshow-content .box h1 {
+  font-size: 80px;
+  font-family: 'PoetsenOne';
+  text-transform: capitalize;
+  margin-bottom: 20%;
+  padding-top: 5%;
+  color: #627321;
+}
+div#slideshow-content .box p {
+  font-size: 40px;
+  font-family: 'PoetsenOne';
 }

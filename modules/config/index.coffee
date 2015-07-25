@@ -3,8 +3,8 @@
 ###
 
 # Communication
-exports.IPADDR = 'localhost'
-exports.PORT = 80
+exports.IPADDR = '192.168.0.15'
+exports.PORT = 8080
 
 exports.DATABASEIP = 'localhost'
 exports.DATABASEPORT = 27017

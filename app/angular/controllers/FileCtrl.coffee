@@ -1,7 +1,16 @@
+Slideshow = require('../class/SlideshowHandler')
+
 FileCtrl = ($scope, Socket, $routeParams, $location, $sce) ->
+	$scope.file = {}
 	Socket.emit 'getFile', $routeParams.id
 	Socket.on 'file', (file) ->
-		$scope.file = file
+		if file.type == "text"
+			document.getElementById('slideshow-content').style.display = "none"
+			$scope.file = file
+		else if file.type == "slideshow" 
+			slideShow = new Slideshow JSON.parse(file.content)
+			$scope.file.name = file.name 
+			$scope._id = file._id
 
 	$scope.getContent = (content) -> $sce.trustAsHtml content
  

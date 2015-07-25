@@ -23,6 +23,7 @@ exports.configure = (io) ->
 
 		socket.on 'newFile', (file) ->
 			if file.type == 'text' then file.content = "<h1>#{file.name}</h1>"
+			else if file.type == 'slideshow' then file.content = "[ { \"content\" : \"Here is your first slide.\", \"title\" : \"#{file.name}\" } ]"
 			FilesDatabase.insertFile file, ->
 				FilesDatabase.findFiles file.parent, (files) ->
 					socket.emit 'files', files
@@ -40,4 +41,3 @@ exports.configure = (io) ->
 
 		socket.on 'updateFile', (file) ->
 			FilesDatabase.updateFile file
-

@@ -46,9 +46,17 @@ module.exports = class FileList extends EventEmitter
 
 	clean : -> @holder.innerHTML = ""
 
+	edit : ->
+		if @selectedNodes.length == 0 then new InfoCard "You can not edit. No file selected."; return
+		file = @getFileFromName(@selectedNodes[0].children[0].innerHTML)
+		if file.type == "folder" then new InfoCard "You can not edit a folder." ; return
+
+		@emit 'edit', file._id
+
 	delete : ->
 		if @selectedNodes.length == 0 then new InfoCard "You can not delete. No file selected."; return
 		@emit 'delete', @getFileFromName(@selectedNodes[0].children[0].innerHTML)
+
 	update : ->
 		if @selectedNodes.length == 0 then new InfoCard "You can not update. No file selected."; return
 		oldName = @selectedNodes[0].children[0].innerHTML
