@@ -27,7 +27,7 @@ module.exports = class FileList extends EventEmitter
 
 		fileElt = document.createElement 'li'
 		fileElt.classList.add 'animated'
-		fileElt.classList.add 'slideInLeft'
+		fileElt.classList.add 'fadeIn'
 		fileElt.classList.add file.type
 
 		pName = document.createElement 'p'
