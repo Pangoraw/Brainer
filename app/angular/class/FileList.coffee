@@ -34,12 +34,14 @@ module.exports = class FileList extends EventEmitter
 		pName.classList.add 'name'
 		pName.innerHTML = file.name
 
-		pType = document.createElement 'p'
-		pType.classList.add 'type'
-		pType.innerHTML = file.type
+		iType = document.createElement 'i'
+		iType.classList.add 'material-icons'
+		iType.classList.add 'type'
+		if file.type == "folder" then	iType.innerHTML = file.type
+		else if file.type == "text" then iType.innerHTML = "insert_drive_file"
 
 		fileElt.appendChild pName
-		fileElt.appendChild pType
+		fileElt.appendChild iType
 
 		@holder.appendChild fileElt
 		@files.push file
@@ -72,7 +74,7 @@ module.exports = class FileList extends EventEmitter
 		if event.target.innerHTML.slice(0, 1) != "<"
 			target = event.target.parentElement
 		else target = event.target
-		
+
 		if target == @holder
 			node.classList.remove "selected" for node in @selectedNodes
 			@selectedNodes.splice node, 1 for node in @selectedNodes

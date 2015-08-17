@@ -47,16 +47,10 @@ nav.files-list
 	.control-panel
 		button
 			float left
-			width 20%
-			&.change-name
-				width 40%
-			&.edit-file
-				width 30%
-			&.reload
-				width 30%
+			width 25%
 		input.search
 			width 100%
-	button 
+	button
 		margin 0
 	ul
 		list-style none
@@ -76,11 +70,11 @@ nav.files-list
 		&.selected
 			background-color #61740D
 		> p.name
-			-moz-user-select none 
+			-moz-user-select none
 			-webkit-user-select none
-			-ms-user-select none 
-			user-select none 
-			-webkit-user-drag none 
+			-ms-user-select none
+			user-select none
+			-webkit-user-drag none
 			user-drag none
 			overflow hidden
 			float left
@@ -90,19 +84,14 @@ nav.files-list
 			text-decoration none
 			text-transform capitalize
 			margin-bottom 10px
-		> p.type
-			-moz-user-select none 
+		> i.type
+			-moz-user-select none
 			-webkit-user-select none
-			-ms-user-select none 
-			user-select none 
-			-webkit-user-drag none 
+			-ms-user-select none
+			user-select none
+			-webkit-user-drag none
 			user-drag none
-			font-family Ubuntu
 			float right
-			color #ddd
-			text-transform uppercase
-			font-size 15px
-			font-style italic
 
 .sidebar
 	width 300px
@@ -110,19 +99,19 @@ nav.files-list
 
 .resize-handle
 	&.left &.right
-		&:hover 
+		&:hover
 			background #aaa
 		width 4px
 		background #ccc
 		cursor ew-resize
 	&.top &.bottom
-		&:hover 
+		&:hover
 			background #aaa
 		height 4px
 		background #ccc
 		cursor ns-resize
 
-html.handle-dragging * 
+html.handle-dragging *
 	-webkit-user-select none
 	-moz-user-select none
 	-ms-user-select none

@@ -10,14 +10,22 @@ block content
     h1 Brainer
   nav.files-list.is-closed(ng-controller="FilesCtrl")
     .control-panel
-      button(ng-click="goBackInHistory()") <-
-      button(ng-click="goBackInTree()") ^
-      button(ng-click="goHome()") Home
-      button(ng-click="goCreate()") Create 
-      button(ng-click="deleteFile()") Delete
-      button.change-name(ng-click="changeName()") Change Name
-      button.reload(ng-click="refresh()") Refresh
-      button.edit-file(ng-click="editFile()") Edit
+      button(ng-click="goBackInHistory()") 
+        i.material-icons keyboard_arrow_left
+      button(ng-click="goBackInTree()")
+        i.material-icons keyboard_arrow_up
+      button(ng-click="goHome()")
+        i.material-icons home
+      button(ng-click="goCreate()") 
+        i.material-icons add
+      button(ng-click="deleteFile()")
+        i.material-icons delete
+      button.change-name(ng-click="changeName()")
+        i.material-icons label
+      button.reload(ng-click="refresh()")
+        i.material-icons refresh
+      button.edit-file(ng-click="editFile()") 
+        i.material-icons edit
       input.search(type="text", placeholder="Search in folder...", ng-model="q")
     ul#file-list
 
