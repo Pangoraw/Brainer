@@ -1,6 +1,9 @@
 node_modules/
-*.js
+
 !Gulpfile.js
+
 data/
+
 public/js/
 public/stylesheets/*.css
+!public/stylesheets/animate.css
