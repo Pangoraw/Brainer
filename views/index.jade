@@ -5,7 +5,7 @@ block content
     div#card
 
   nav.header(ng-controller="AppCtrl")
-    div.menu-icon.is-closed
+    .menu-icon.is-closed
       span
     h1 Brainer
   nav.files-list.is-closed(ng-controller="FilesCtrl")
@@ -31,14 +31,11 @@ block content
 
   div.view.not-pushed(ng-view)
 
-  script(src="//code.jquery.com/jquery-1.11.2.min.js")
   script(src='//cdn.socket.io/socket.io-1.0.6.js')
   script(src='//ajax.googleapis.com/ajax/libs/angularjs/1.2.20/angular.js')
   script(src='//ajax.googleapis.com/ajax/libs/angularjs/1.2.20/angular-resource.min.js')
   script(src='//ajax.googleapis.com/ajax/libs/angularjs/1.2.20/angular-animate.js')
   script(src='//ajax.googleapis.com/ajax/libs/angularjs/1.2.20/angular-sanitize.js')
   script(src='//ajax.googleapis.com/ajax/libs/angularjs/1.2.20/angular-route.min.js')
-
-  script(src="js/anim-css.js")
 
   script(src='/js/app.js')
