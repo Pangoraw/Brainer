@@ -4,6 +4,7 @@ InfoCard 		 = require('./InfoCard')
 
 module.exports = class FileList extends EventEmitter
 
+	searchInput : null
 	holder : null
 	files : []
 	selectedNodes : []
@@ -16,6 +17,9 @@ module.exports = class FileList extends EventEmitter
 		@holder = document.querySelector "ul#file-list"
 
 		@holder.addEventListener 'click', @_onClick
+
+		@searchInput = document.querySelector "input.search"
+		@searchInput.addEventListener "input", @_onSearchChange
 
 	getFileFromName : ( name ) ->
 		for file in @files
@@ -44,6 +48,7 @@ module.exports = class FileList extends EventEmitter
 		fileElt.appendChild iType
 
 		@holder.appendChild fileElt
+		file.HTMLElt = fileElt
 		@files.push file
 
 	clean : -> @holder.innerHTML = ""
@@ -67,6 +72,13 @@ module.exports = class FileList extends EventEmitter
 			file = @getFileFromName(@selectedNodes[0].children[0].innerHTML)
 			file.name = newName
 			@emit 'update', file
+
+	_onSearchChange : ( event ) =>
+		console.log "search"
+		query = @searchInput.value
+		for file in @files
+			if file.HTMLElt.innerHTML.search(new RegExp(query, "i")) < 0 then file.HTMLElt.style.display = "none"
+			else file.HTMLElt.style.display = "list-item"
 
 	_onClick : ( event ) =>
 		event.preventDefault()
