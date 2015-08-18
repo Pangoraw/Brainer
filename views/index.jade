@@ -14,6 +14,8 @@ block content
         i.material-icons keyboard_arrow_left
       button(ng-click="goBackInTree()")
         i.material-icons keyboard_arrow_up
+      button.reload(ng-click="refresh()", alt="refresh")
+        i.material-icons refresh
       button(ng-click="goHome()")
         i.material-icons home
       button(ng-click="goCreate()") 
@@ -22,8 +24,6 @@ block content
         i.material-icons delete
       button.change-name(ng-click="changeName()")
         i.material-icons label
-      button.reload(ng-click="refresh()")
-        i.material-icons refresh
       button.edit-file(ng-click="editFile()") 
         i.material-icons edit
       input.search(type="text", placeholder="Search in folder...", ng-model="q")
