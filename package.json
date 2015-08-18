@@ -8,6 +8,7 @@
     "coffee-script": "^1.9.2",
     "coffeeify": "^1.1.0",
     "colors": "^1.1.2",
+    "cson": "^3.0.1",
     "express": "4.6.1",
     "fs": "0.0.2",
     "gulp": "^3.8.11",
