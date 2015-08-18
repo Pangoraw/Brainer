@@ -21,11 +21,6 @@ module.exports = class FileList extends EventEmitter
 		@searchInput = document.querySelector "input.search"
 		@searchInput.addEventListener "input", @_onSearchChange
 
-	getFileFromName : ( name ) ->
-		for file in @files
-			if file.name == name then return file
-		-1
-
 	getFileFromId : ( id ) ->
 		for file in @files
 			if file._id == id then return file
