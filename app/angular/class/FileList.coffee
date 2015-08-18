@@ -26,6 +26,11 @@ module.exports = class FileList extends EventEmitter
 			if file.name == name then return file
 		-1
 
+	getFileFromId : ( id ) ->
+		for file in @files
+			if file._id == id then return file
+		-1
+
 	append : ( file ) ->
 		return if !file?
 
@@ -33,6 +38,7 @@ module.exports = class FileList extends EventEmitter
 		fileElt.classList.add 'animated'
 		fileElt.classList.add 'fadeIn'
 		fileElt.classList.add file.type
+		fileElt.id = file._id
 
 		pName = document.createElement 'p'
 		pName.classList.add 'name'
@@ -55,21 +61,21 @@ module.exports = class FileList extends EventEmitter
 
 	edit : ->
 		if @selectedNodes.length == 0 then new InfoCard "You can not edit. No file selected."; return
-		file = @getFileFromName(@selectedNodes[0].children[0].innerHTML)
+		file = @getFileFromId(@selectedNodes[0].id)
 		if file.type == "folder" then new InfoCard "You can not edit a folder." ; return
 
 		@emit 'edit', file._id
 
 	delete : ->
 		if @selectedNodes.length == 0 then new InfoCard "You can not delete. No file selected."; return
-		@emit 'delete', @getFileFromName(@selectedNodes[0].children[0].innerHTML)
+		@emit 'delete', @getFileFromId(@selectedNodes[0].id)
 
 	update : ->
 		if @selectedNodes.length == 0 then new InfoCard "You can not update. No file selected."; return
 		oldName = @selectedNodes[0].children[0].innerHTML
 		new FormCard [ { type : 'text', label : 'New name' } ], ( data ) =>
 			newName = data[0]
-			file = @getFileFromName(@selectedNodes[0].children[0].innerHTML)
+			file = @getFileFromId(@selectedNodes[0].id)
 			file.name = newName
 			@emit 'update', file
 
@@ -95,4 +101,4 @@ module.exports = class FileList extends EventEmitter
 			@selectedNodes.push target
 			target.classList.add "selected"
 		else
-			@emit 'activated', @getFileFromName(target.children[0].innerHTML)
+			@emit 'activated', @getFileFromId(@selectedNodes[0].id)
