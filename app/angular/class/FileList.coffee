@@ -18,6 +18,9 @@ module.exports = class FileList extends EventEmitter
 
 		@holder.addEventListener 'click', @_onClick
 
+		@buttonsToBeDisabled = document.querySelectorAll "div.control-panel>button.file-interaction"
+		button.disabled = true for button in @buttonsToBeDisabled
+
 		@searchInput = document.querySelector "input.search"
 		@searchInput.addEventListener "input", @_onSearchChange
 
@@ -100,3 +103,6 @@ module.exports = class FileList extends EventEmitter
 			target.classList.add "selected"
 		else
 			@emit 'activated', @getFileFromId(@selectedNodes[0].id)
+
+		if @selectedNodes.length > 0 then button.disabled = false for button in @buttonsToBeDisabled
+		else button.disabled = true for button in @buttonsToBeDisabled

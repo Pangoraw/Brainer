@@ -20,11 +20,11 @@ block content
         i.material-icons home
       button(ng-click="goCreate()") 
         i.material-icons add
-      button(ng-click="deleteFile()")
+      button.file-interaction(ng-click="deleteFile()")
         i.material-icons delete
-      button.change-name(ng-click="changeName()")
+      button.file-interaction.change-name(ng-click="changeName()")
         i.material-icons label
-      button(ng-click="editFile()") 
+      button.file-interaction(ng-click="editFile()") 
         i.material-icons edit
       input.search(type="text", placeholder="Search in folder...", ng-model="q")
     ul#file-list
