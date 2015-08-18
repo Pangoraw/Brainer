@@ -32,7 +32,7 @@ gulp.task('compile:resources', function() {
 });
 
 gulp.task('compile:stylus', function() {
-  return gulp.src(['./app/stylesheets/*.styl', '!./app/stylesheets/fonts.styl']).pipe(plumber()).pipe(stylus({
+  return gulp.src(['./app/stylesheets/style.styl']).pipe(plumber()).pipe(stylus({
     use: [nib()],
     errors: true
   })).pipe(gulp.dest('./public/stylesheets'));
