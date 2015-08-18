@@ -11,14 +11,19 @@ html
     link(rel="stylesheet", type="text/css", href="stylesheets/style.css")
     link(rel="stylesheet", type="text/css", href="codemirror/lib/codemirror.css")
     link(rel="stylesheet", type="text/css", href="codemirror/theme/elegant.css")
+    
     script(src="codemirror/lib/codemirror.js")
     script(src="codemirror/addon/hint/show-hint.js")
-    script(src="codemirror/addon/hint/xml-hint.js")
-    script(src="codemirror/addon/hint/html-hint.js")
+    script(src="codemirror/addon/mode/overlay.js")
     script(src="codemirror/mode/xml/xml.js")
+    script(src="codemirror/mode/markdown/markdown.js")
+    script(src="codemirror/mode/gfm/gfm.js")
     script(src="codemirror/mode/javascript/javascript.js")
     script(src="codemirror/mode/css/css.js")
     script(src="codemirror/mode/htmlmixed/htmlmixed.js")
+    script(src="codemirror/mode/clike/clike.js")
+    script(src="codemirror/mode/meta.js")
+    
     title Brainer
 
   body(ng-app="myApp")
