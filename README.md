@@ -6,4 +6,15 @@ First of all, make sure you run the `npm install .` command in the Brainer folde
 
 To be used as it is, you must run the app.coffee file. Using the command `coffee app.coffee`, make sure you have coffeescript installed globally. To store all the data, you must run a MongoDB database.
 
-All setup of Brainer can be made in config/index.coffee
+All setup of Brainer can be made in /config.cson
+Example :
+```
+server :
+  host : "192.168.0.1"
+  port : "80"
+database :
+  host : "192.168.0.1"
+  port : 4087
+```
+
+All properties are not required, you can, for example, only change the port of the server. In this case, it will use default values that you can find in `config/index.coffee`
