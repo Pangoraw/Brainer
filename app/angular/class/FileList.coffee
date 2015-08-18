@@ -74,7 +74,6 @@ module.exports = class FileList extends EventEmitter
 			@emit 'update', file
 
 	_onSearchChange : ( event ) =>
-		console.log "search"
 		query = @searchInput.value
 		for file in @files
 			if file.HTMLElt.innerHTML.search(new RegExp(query, "i")) < 0 then file.HTMLElt.style.display = "none"
