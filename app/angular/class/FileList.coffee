@@ -63,7 +63,7 @@ module.exports = class FileList extends EventEmitter
 
 	delete : ->
 		if @selectedNodes.length == 0 then new InfoCard "You can not delete. No file selected."; return
-		@emit 'delete', @getFileFromId(@selectedNodes[0].id)
+		@emit 'delete', @getFileFromId(selectedNode.id) for selectedNode in @selectedNodes
 
 	update : ->
 		if @selectedNodes.length == 0 then new InfoCard "You can not update. No file selected."; return
@@ -90,6 +90,9 @@ module.exports = class FileList extends EventEmitter
 		if target == @holder
 			node.classList.remove "selected" for node in @selectedNodes
 			@selectedNodes.splice node, 1 for node in @selectedNodes
+		else if event.ctrlKey and @selectedNodes.length > 0 and @selectedNodes.indexOf(target) == -1
+			@selectedNodes.push target
+			target.classList.add "selected"
 		else if @selectedNodes.indexOf(target) == -1
 			node.classList.remove "selected" for node in @selectedNodes
 			@selectedNodes.splice node, 1 for node in @selectedNodes
