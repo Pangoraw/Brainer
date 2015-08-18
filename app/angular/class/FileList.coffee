@@ -41,8 +41,8 @@ module.exports = class FileList extends EventEmitter
 		iType = document.createElement 'i'
 		iType.classList.add 'material-icons'
 		iType.classList.add 'type'
-		if file.type == "folder" then	iType.innerHTML = file.type
-		else if file.type == "text" then iType.innerHTML = "insert_drive_file"
+		if file.type != "text" then	iType.innerHTML = file.type
+		else iType.innerHTML = "insert_drive_file"
 
 		fileElt.appendChild pName
 		fileElt.appendChild iType
