@@ -67,6 +67,8 @@ module.exports = class FileList extends EventEmitter
 	delete : ->
 		if @selectedNodes.length == 0 then new InfoCard "You can not delete. No file selected."; return
 		@emit 'delete', @getFileFromId(selectedNode.id) for selectedNode in @selectedNodes
+		@selectedNodes.splice node, 1 for node in @selectedNodes
+		button.disabled = true for button in @buttonsToBeDisabled
 
 	update : ->
 		if @selectedNodes.length == 0 then new InfoCard "You can not update. No file selected."; return

@@ -12,7 +12,8 @@ FilesCtrl = ($scope, Socket, Files, $location) ->
 	FileList.on 'edit', (id) => $location.path "file/edit/#{id}"
 	FileList.on 'update', ( file ) => Socket.emit 'updateFile', file
 	FileList.on 'delete', ( file ) =>
-		Socket.emit 'deleteFile', file
+		Socket.emit 'deleteFile', file._id
+		Socket.emit 'getFiles', Files.getCurrentFolderId() 
 	FileList.on 'activated', ( file ) =>
 		if file.type == "text" or file.type == "slideshow"
 			$location.path("/file/#{file._id}").replace()
@@ -45,7 +46,7 @@ FilesCtrl = ($scope, Socket, Files, $location) ->
 
 	$scope.goBackInHistory = ->
 		if Files.history.length > 2 then id = Files.history[Files.history.length - 1]
-		else if Files.history.length <= 1 then return 
+		else if Files.history.length <= 1 then return
 		Socket.emit "getFiles", id
 		Files.history.splice Files.history.length-1, 1
 

@@ -27,17 +27,15 @@ exports.configure = (io) ->
 			FilesDatabase.insertFile file, ->
 				FilesDatabase.findFiles file.parent, (files) ->
 					socket.emit 'files', files
-	
+
 		socket.on 'getFilesInParent', (id) ->
 			FilesDatabase.findFile id, (file) ->
 				if file?
 					FilesDatabase.findFiles file.parent, (files) ->
 						socket.emit 'files', files
 
-		socket.on 'deleteFile', (file) ->
-			FilesDatabase.removeFile file._id, ->
-				FilesDatabase.findFiles file.parent, (files) ->
-					socket.emit 'files', files
+		socket.on 'deleteFile', (id) ->
+			FilesDatabase.removeFile id, ->
 
 		socket.on 'updateFile', (file) ->
 			FilesDatabase.updateFile file
