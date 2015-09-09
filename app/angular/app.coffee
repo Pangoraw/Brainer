@@ -33,9 +33,9 @@ app.controller "EditCtrl", [ "$scope", "Socket", "$routeParams", "$location", Ed
 ###
 
 app.config [
-	"$routeProvider", 
+	"$routeProvider",
 	($routeProvider) ->
-		$routeProvider.when "/home", { templateUrl: "partials/home", controller: AppCtrl }
+		$routeProvider.when "/home", { templateUrl: "partials/home", controller : undefined }
 		$routeProvider.when "/file/:id", { templateUrl: "partials/file", controller: FileCtrl }
 		$routeProvider.when "/file/edit/:id", { templateUrl: "partials/edit", controller: EditCtrl }
 		$routeProvider.otherwise { redirectTo: "/home" }
