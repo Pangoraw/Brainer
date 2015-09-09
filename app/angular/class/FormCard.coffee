@@ -1,14 +1,16 @@
-module.exports = class FormCard 
-	
+module.exports = class FormCard
+
 	overlay : null
 	box : null
 	inputs : []
 	callback : null
 
 	constructor : ( data, callback=-> ) ->
-		if document.getElementById('card').innerHTML != "" then return 
-		if not Array.isArray(data) then return
-		
+		if document.getElementById('card').innerHTML != "" then return
+		if not Array.isArray(data) and typeof data is "object" then data = [data]
+		else if not Array.isArray data then return
+
+
 		@callback = callback
 
 		@overlay = document.querySelector('div#card-overlay')
@@ -33,7 +35,7 @@ module.exports = class FormCard
 					selectElt.appendChild optionElt
 				@box.appendChild selectElt
 				@inputs.push selectElt
-			
+
 			else
 				if inp.label?
 					label = document.createElement('label')
@@ -41,7 +43,7 @@ module.exports = class FormCard
 					@box.appendChild label
 				node = document.createElement('input')
 				node.type = inp.type
-				node.value = inp.value if inp.value ?
+				node.value = inp.value if inp.value?
 				node.placeholder = inp.placeholder if inp.placeholder?
 				@box.appendChild node
 				@inputs.push node
@@ -56,7 +58,7 @@ module.exports = class FormCard
 
 		@box.appendChild(closeButton)
 		@box.appendChild(button)
-		
+
 		closeButton.addEventListener 'click', @_onClose
 		button.addEventListener 'click', @_onSubmit
 
@@ -71,10 +73,10 @@ module.exports = class FormCard
 		e.preventDefault()
 
 		out = []
-	
+
 		for input in @inputs
 			out.push input.value
-		for input in @inputs 
+		for input in @inputs
 			@inputs.splice @inputs.indexOf input, 1
 
 		@box.innerHTML = ""

@@ -71,7 +71,8 @@ module.exports = class FileList extends EventEmitter
 	update : ->
 		if @selectedNodes.length == 0 then new InfoCard "You can not update. No file selected."; return
 		oldName = @selectedNodes[0].children[0].innerHTML
-		new FormCard [ { type : 'text', label : 'New name' } ], ( data ) =>
+		console.log oldName
+		new FormCard { type : 'text', label : 'New name', value : oldName } , ( data ) =>
 			newName = data[0]
 			file = @getFileFromId(@selectedNodes[0].id)
 			file.name = newName
