@@ -44,8 +44,10 @@ FilesCtrl = ($scope, Socket, Files, $location) ->
 		Socket.emit 'getFiles', Files.getCurrentFolderId()
 
 	$scope.goBackInHistory = ->
-		if Files.history.length > 2 then id = Files.history[Files.history.length - 2]
-		else id = "root"
+		if Files.history.length > 2 then id = Files.history[Files.history.length - 1]
+		else if Files.history.length <= 1 then return 
+		Socket.emit "getFiles", id
+		Files.history.splice Files.history.length-1, 1
 
 	$scope.goBackInTree = ->
 		return if Files.getCurrentFolderId() == "root"
