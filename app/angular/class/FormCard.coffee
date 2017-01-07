@@ -52,12 +52,11 @@ module.exports = class FormCard
 		button.innerHTML = "Submit"
 
 		closeButton = document.createElement('button')
-		closeButton.innerHTML = "x"
+		closeButton.innerHTML = "Cancel"
 		closeButton.classList.add 'close-button'
 
-
-		@box.appendChild(closeButton)
 		@box.appendChild(button)
+		@box.appendChild(closeButton)
 
 		closeButton.addEventListener 'click', @_onClose
 		button.addEventListener 'click', @_onSubmit
