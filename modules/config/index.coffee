@@ -4,8 +4,8 @@
 
 # Communication
 cson = require 'cson'
+fs = require 'fs'
 
-userConfig = cson.parseFile "./config.cson"
 defaultConfig =
 	server :
 		host : "localhost"
@@ -14,19 +14,16 @@ defaultConfig =
 		host : "localhost"
 		port : 27017
 
-exports.IPADDR = defaultConfig.server.host
-exports.PORT = defaultConfig.server.port
+if fs.existsSync "./config.cson"
+	userConfig = cson.parseFile "./config.cson"
+	
+	if userConfig.server?
+		exports.IPADDR = userConfig.server.host or defaultConfig.server.host
+		exports.PORT = userConfig.server.port or defaultConfig.server.port
 
-exports.DATABASEIP = defaultConfig.database.host
-exports.DATABASEPORT = defaultConfig.database.port
-
-if userConfig.server?
-	exports.IPADDR = userConfig.server.host if userConfig.server.host?
-	exports.PORT = userConfig.server.port if userConfig.server.port?
-
-if userConfig.database?
-	exports.DATABASEIP = userConfig.database.host if userConfig.database.host?
-	exports.DATABASEPORT = userConfig.database.port if userConfig.database.port?
+else
+	exports.IPADDR = defaultConfig.server.host
+	exports.PORT = defaultConfig.server.port
 
 # Internal Functionment
 exports.VIEW_ENGINE = 'jade'
