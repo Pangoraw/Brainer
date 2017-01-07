@@ -21,11 +21,13 @@ app.get "*", routes.index
 httpServer = http.createServer app
 httpServer.on "error", (err) =>
 	if err.code == "EADDRINUSE"
-    csl.error("Can't run server. Another app is already running on this port.")
-    process.exit()
+    	csl.error("Can't run server. Another app is already running on this port.")
+    	process.exit()
 	else if err.code == "ENOTFOUND"
-    csl.error("Can't run server on this ip. Try changing it on /config.json.")
-    process.exit()
+    	csl.error("Can't run server on this ip. Try changing it on /config.json.")
+    	process.exit()
+	else if err.code == "EADDRNOTAVAIL"
+		csl.error "Can't run server. This ip adress is not available on this machine."
 	else throw err
 serverStarted = ->
 	csl.log "Express server listening on http://#{app.get 'ipaddr'}:#{app.get 'port'}"
