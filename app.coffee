@@ -30,7 +30,7 @@ httpServer.on "error", (err) =>
 		csl.error "Can't run server. This ip adress is not available on this machine."
 	else throw err
 serverStarted = ->
-	csl.log "Express server listening on http://#{app.get 'ipaddr'}:#{app.get 'port'}"
+	csl.success "Express server listening on http://#{app.get 'ipaddr'}:#{app.get 'port'}"
 
 server = httpServer.listen app.get('port'), app.get('ipaddr'), serverStarted
 

@@ -16,6 +16,9 @@ Console =
   log : (msg) ->
   	timestamp = @getTime()
   	console.log "["+"INFO".blue+"] " + "#{timestamp} -".grey + " #{msg}".white
+  success: (msg) ->
+    timestamp = @getTime()
+    console.log "["+"SUCCESS".green+"] " + "#{timestamp} -".grey + " #{msg}".white
   error : (msg) ->
   	timestamp = @getTime()
   	console.log "["+"ERROR".red+"]" + " #{timestamp} - ".grey.italic + "#{msg}".white
