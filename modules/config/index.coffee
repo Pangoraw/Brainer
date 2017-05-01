@@ -10,13 +10,10 @@ defaultConfig =
 	server :
 		host : "localhost"
 		port : 8080
-	database :
-		host : "localhost"
-		port : 27017
 
 if fs.existsSync "./config.cson"
 	userConfig = cson.parseFile "./config.cson"
-	
+
 	if userConfig.server?
 		exports.IPADDR = userConfig.server.host or defaultConfig.server.host
 		exports.PORT = userConfig.server.port or defaultConfig.server.port

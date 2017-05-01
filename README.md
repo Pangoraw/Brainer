@@ -12,9 +12,6 @@ Example :
 server :
   host : "192.168.0.1"
   port : "80"
-database :
-  host : "192.168.0.1"
-  port : 4087
 ```
 
 All properties are not required, you can, for example, only change the port of the server. In this case, it will use default values that you can find in `config/index.coffee`
